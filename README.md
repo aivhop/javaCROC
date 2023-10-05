@@ -1,2 +1,2 @@
 # javaCROC
-education
+Alexander Chernetsov @aivhop
