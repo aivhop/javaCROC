@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a97d3ee8-f891-4491-9d2a-3fe7bba19618" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homework/first/task1/FirstTask.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homework/first/task2/SecondTask.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homework/first/README.MD" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/first/README.MD" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homework/first/console.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/first/console.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homework/first/task1/FirstTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/first/task1/FirstTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homework/first/task2/SecondTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/first/task2/SecondTask.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,19 +35,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "onboarding.tips.debug.path": "C:/Users/Alexander/source/java repos/PROJECT/croc/src/Main.java",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Alexander/source/java repos/PROJECT/croc/src/Main.java&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Alexander\source\java repos\PROJECT\croc\src" />
@@ -77,6 +78,7 @@
       <workItem from="1696532382884" duration="4000" />
       <workItem from="1696533727928" duration="49000" />
       <workItem from="1696594283812" duration="2884000" />
+      <workItem from="1696599190915" duration="274000" />
     </task>
     <servers />
   </component>

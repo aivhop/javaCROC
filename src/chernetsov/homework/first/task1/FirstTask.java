@@ -1,4 +1,4 @@
-package homework.first.task1;
+package chernetsov.homework.first.task1;
 
 public class FirstTask {
     public static void task(){
