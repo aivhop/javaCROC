@@ -1,6 +1,6 @@
-package chernetsov.homework.second.task1;
+package chernetsov.homework.old;
 
-public class FirstTask {
+public class Task3Main {
     public static void main(String[] args) {
         long value = Long.parseLong(args[0]);
         System.out.println(whatNumber(value));

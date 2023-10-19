@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a97d3ee8-f891-4491-9d2a-3fe7bba19618" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/first/task1/FirstTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/old/Task1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/first/task1/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/old/Task1Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/first/task2/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/old/Task2Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/first/task2/SecondTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/old/Task2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/second/task1/FirstTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/old/Task3Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/second/task2/SecondTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/old/Task4Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +22,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -34,6 +42,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/Users/Alexander/source/java/PROJECT/croc",
     "node.js.detected.package.eslint": "true",
@@ -46,23 +55,12 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Alexander\source\java\PROJECT\croc\src\chernetsov\homework\first" />
+      <recent name="C:\Users\Alexander\source\java\PROJECT\croc\src\chernetsov\homework\first\task1" />
       <recent name="C:\Users\Alexander\source\java repos\PROJECT\croc\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.FirstTask">
-    <configuration name="FirstTask" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="chernetsov.homework.second.task1.FirstTask" />
-      <module name="croc" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="chernetsov.homework.second.task1.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.Task5">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="croc" />
@@ -70,12 +68,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="chernetsov.homework.first.task1.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="chernetsov.homework.first.task1.Main" />
+    <configuration name="Task1Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="chernetsov.homework.old.Task1Main" />
       <module name="croc" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="chernetsov.homework.first.task1.*" />
+          <option name="PATTERN" value="chernetsov.homework.old.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -83,12 +81,38 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="chernetsov.homework.first.task2.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="chernetsov.homework.first.task2.Main" />
+    <configuration name="Task2Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="chernetsov.homework.old.Task2Main" />
       <module name="croc" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="chernetsov.homework.first.task2.*" />
+          <option name="PATTERN" value="chernetsov.homework.old.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Task3Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="chernetsov.homework.old.Task3Main" />
+      <module name="croc" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="chernetsov.homework.old.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Task5" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="chernetsov.homework.last.Task5" />
+      <module name="croc" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="chernetsov.homework.last.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -98,9 +122,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.FirstTask" />
-        <item itemvalue="Application.chernetsov.homework.first.task2.Main" />
-        <item itemvalue="Application.chernetsov.homework.first.task1.Main" />
+        <item itemvalue="Application.Task5" />
+        <item itemvalue="Application.Task3Main" />
+        <item itemvalue="Application.Task2Main" />
+        <item itemvalue="Application.Task1Main" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -122,6 +147,7 @@
       <workItem from="1697060110226" duration="694000" />
       <workItem from="1697284844411" duration="11000" />
       <workItem from="1697387781463" duration="4207000" />
+      <workItem from="1697735928567" duration="9629000" />
     </task>
     <servers />
   </component>

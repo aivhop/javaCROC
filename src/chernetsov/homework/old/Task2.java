@@ -1,6 +1,6 @@
-package chernetsov.homework.first.task2;
+package chernetsov.homework.old;
 
-public class SecondTask {
+public class Task2 {
     public static void task() {
         for (int i = 1; i <= 100; ++i) {
             if(i % 3 == 0){

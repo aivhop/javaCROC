@@ -1,6 +1,6 @@
-package chernetsov.homework.second.task2;
+package chernetsov.homework.old;
 
-public class SecondTask {
+public class Task4Main {
     public static void main(String[] args) {
         int start = Integer.parseInt(args[0]);
         int difference = Integer.parseInt(args[1]);

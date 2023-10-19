@@ -1,6 +1,6 @@
-package chernetsov.homework.first.task1;
+package chernetsov.homework.old;
 
-public class FirstTask {
+public class Task1 {
     public static void task(){
         System.out.println("Hello, Java ^^");
     }
