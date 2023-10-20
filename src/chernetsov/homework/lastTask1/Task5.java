@@ -1,4 +1,4 @@
-package chernetsov.homework.last;
+package chernetsov.homework.lastTask1;
 
 public class Task5 {
     public static void main(String[] args) {
@@ -35,17 +35,16 @@ public class Task5 {
                 Appliance.Color.WHITE, "Default stove with oven", Stove.Burners.ELECTRIC,
                 Stove.Burners.ELECTRIC, Stove.Burners.INDUCTION, Stove.Burners.INDUCTION);
 
-        StoveWithOvenImported stove4 = new StoveWithOvenImported(80,300,60,
-                "glass ceramics","USA",170_000, 95, 105, 120, 80,
-                Appliance.Color.BLUE," Big imported stove", Stove.Burners.INDUCTION,
+        StoveWithOvenImported stove4 = new StoveWithOvenImported(80, 300, 60,
+                "glass ceramics", "USA", 170_000, 95, 105, 120, 80,
+                Appliance.Color.BLUE, "Big imported stove", Stove.Burners.INDUCTION,
                 Stove.Burners.INDUCTION, Stove.Burners.INDUCTION, Stove.Burners.INDUCTION);
-        //todo
-        // exceptions in constructor
 
         Appliance appliances[] = {
                 fridge, fridgeWithFreezer, fridgeImported, fridgeImportedWithGuarantee, frWithFrImp,
                 frWithFrImp2, stove1, stove2, stove3, stove4
         };
+
         for (Appliance ap : appliances) {
             System.out.println(ap);
             System.out.println();

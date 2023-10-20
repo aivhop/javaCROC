@@ -1,4 +1,4 @@
-package chernetsov.homework.last;
+package chernetsov.homework.lastTask1;
 
 public class FridgeWithFreezerImported extends FridgeImported{
     private int numberOfFreezerShelves;
@@ -7,6 +7,9 @@ public class FridgeWithFreezerImported extends FridgeImported{
                                      double price, double weight, double width, double height,
                                      double depth, Color color, String description) {
         super(numberOfFridgeShelves, country, price, weight, width, height, depth, color, description);
+        if (numberOfFreezerShelves <= 0) {
+            throw new IllegalArgumentException("Sorry, there should be at least one shelf in the fridge");
+        }
         this.numberOfFreezerShelves = numberOfFreezerShelves;
     }
 
@@ -28,6 +31,9 @@ public class FridgeWithFreezerImported extends FridgeImported{
     }
 
     public void setNumberOfFreezerShelves(int numberOfFreezerShelves) {
+        if (numberOfFreezerShelves <= 0) {
+            throw new IllegalArgumentException("Sorry, there should be at least one shelf in the fridge");
+        }
         this.numberOfFreezerShelves = numberOfFreezerShelves;
     }
 }
