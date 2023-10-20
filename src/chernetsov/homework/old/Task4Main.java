@@ -11,7 +11,7 @@ public class Task4Main {
     private static long arithmeticProgression(int start, int difference, int quantity) {
         long sum = 0;
         long value = start;
-        while (quantity != 0) {
+        while (quantity > 0) {
             sum += value;
             value += difference;
             quantity--;

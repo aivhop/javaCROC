@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a97d3ee8-f891-4491-9d2a-3fe7bba19618" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+    <list default="true" id="a97d3ee8-f891-4491-9d2a-3fe7bba19618" name="Changes" comment="half">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/first/task1/FirstTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/old/Task1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/first/task1/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/old/Task1Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/first/task2/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/old/Task2Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/first/task2/SecondTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/old/Task2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/second/task1/FirstTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/old/Task3Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/second/task2/SecondTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/old/Task4Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/old/Task4Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/old/Task4Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,8 +37,9 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "TODO_SCOPE": "All Places",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Alexander/source/java/PROJECT/croc",
+    "last_opened_file_path": "C:/Users/Alexander/source/java/PROJECT/study/lab2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -147,8 +142,18 @@
       <workItem from="1697060110226" duration="694000" />
       <workItem from="1697284844411" duration="11000" />
       <workItem from="1697387781463" duration="4207000" />
-      <workItem from="1697735928567" duration="9629000" />
+      <workItem from="1697735928567" duration="10440000" />
+      <workItem from="1697786441335" duration="6954000" />
     </task>
+    <task id="LOCAL-00001" summary="half">
+      <option name="closed" value="true" />
+      <created>1697750053596</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1697750053596</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -164,5 +169,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="half" />
+    <option name="LAST_COMMIT_MESSAGE" value="half" />
   </component>
 </project>
