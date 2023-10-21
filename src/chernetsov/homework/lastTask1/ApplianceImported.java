@@ -7,6 +7,9 @@ public abstract class ApplianceImported extends Appliance {
     public ApplianceImported(String country, double price, double weight, double width, double height,
                              double depth, Color color, String description) {
         super(price, weight, width, height, depth, color, description);
+        if (country == null) {
+            throw new IllegalArgumentException("Sorry, the country has a name");
+        }
         this.country = country;
         guarantee = 0;
     }

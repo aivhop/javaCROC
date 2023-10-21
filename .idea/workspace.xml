@@ -5,19 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a97d3ee8-f891-4491-9d2a-3fe7bba19618" name="Changes" comment="half">
-      <change afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/Fridge.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/last/Appliance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/Appliance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/last/ApplianceImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/ApplianceImported.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/last/Fridge.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/last/FridgeImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/FridgeImported.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/last/FridgeWithFreezer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/FridgeWithFreezer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/last/FridgeWithFreezerImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/FridgeWithFreezerImported.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/last/Stove.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/Stove.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/last/StoveImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/StoveImported.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/last/StoveWithOven.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/StoveWithOven.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/last/StoveWithOvenImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/StoveWithOvenImported.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/last/Task5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/Task5.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/ApplianceImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/ApplianceImported.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/FridgeImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/FridgeImported.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/FridgeWithFreezerImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/FridgeWithFreezerImported.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/StoveImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/StoveImported.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/StoveWithOvenImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/StoveWithOvenImported.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/Task5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/Task5.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask2/Annotation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask2/Annotation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask2/Task6.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask2/Task6.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +46,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "TODO_SCOPE": "All Places",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Alexander/source/java/PROJECT/study/lab2",
+    "last_opened_file_path": "C:/Users/Alexander/source/java/PROJECT/croc",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -160,7 +156,9 @@
       <workItem from="1697284844411" duration="11000" />
       <workItem from="1697387781463" duration="4207000" />
       <workItem from="1697735928567" duration="10440000" />
-      <workItem from="1697786441335" duration="16803000" />
+      <workItem from="1697786441335" duration="16846000" />
+      <workItem from="1697831768017" duration="11000" />
+      <workItem from="1697873502212" duration="1983000" />
     </task>
     <task id="LOCAL-00001" summary="half">
       <option name="closed" value="true" />

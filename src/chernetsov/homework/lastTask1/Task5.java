@@ -44,7 +44,6 @@ public class Task5 {
                 fridge, fridgeWithFreezer, fridgeImported, fridgeImportedWithGuarantee, frWithFrImp,
                 frWithFrImp2, stove1, stove2, stove3, stove4
         };
-
         for (Appliance ap : appliances) {
             System.out.println(ap);
             System.out.println();

@@ -26,6 +26,11 @@ public class StoveImported extends ApplianceImported{
                          double weight, double width, double height, double depth, Color color,
                          String description, Stove.Burners... burners) {
         super(country, guarantee, price, weight, width, height, depth, color, description);
+        if (coverage == null) {
+            throw new IllegalArgumentException("Sorry, the stove must have a coating");
+        } else if (burners.length == 0) {
+            throw new IllegalArgumentException("Sorry, the stove must have burners");
+        }
         this.burners = burners;
         this.numberOfBurners = burners.length;
         this.isPortable = isPortable;

@@ -17,6 +17,9 @@ public class FridgeWithFreezerImported extends FridgeImported{
                                      int guarantee, double price, double weight, double width, double height,
                                      double depth, Color color, String description) {
         super(numberOfFridgeShelves, country, guarantee, price, weight, width, height, depth, color, description);
+        if (numberOfFreezerShelves <= 0) {
+            throw new IllegalArgumentException("Sorry, there should be at least one shelf in the fridge");
+        }
         this.numberOfFreezerShelves = numberOfFreezerShelves;
     }
 

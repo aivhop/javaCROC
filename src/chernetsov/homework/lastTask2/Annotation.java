@@ -1,6 +1,6 @@
 package chernetsov.homework.lastTask2;
 
-public class Annotation{
+public class Annotation implements Movable {
     private String label;
 
     private Figure figure;
@@ -8,6 +8,11 @@ public class Annotation{
     public Annotation(String label, Figure figure) {
         this.label = label;
         this.figure = figure;
+    }
+
+    @Override
+    public void move(int dx, int dy) {
+        figure.move(dx, dy);
     }
 
     @Override
