@@ -1,4 +1,4 @@
-package chernetsov.homework.lastTask2;
+package homework.chernetsov.correction.lastTask2;
 
 public class Task6 {
     public static void main(String[] args) {

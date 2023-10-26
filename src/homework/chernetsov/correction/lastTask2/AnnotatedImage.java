@@ -1,4 +1,4 @@
-package chernetsov.homework.lastTask2;
+package homework.chernetsov.correction.lastTask2;
 
 class AnnotatedImage {
     private final String imagePath;

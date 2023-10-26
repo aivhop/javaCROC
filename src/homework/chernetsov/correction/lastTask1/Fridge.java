@@ -1,4 +1,4 @@
-package chernetsov.homework.lastTask1;
+package homework.chernetsov.correction.lastTask1;
 
 public class Fridge extends Appliance {
     private int numberOfFridgeShelves;

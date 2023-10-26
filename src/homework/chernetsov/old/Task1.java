@@ -1,4 +1,4 @@
-package chernetsov.homework.old;
+package homework.chernetsov.old;
 
 public class Task1 {
     public static void task(){

@@ -1,4 +1,4 @@
-package chernetsov.homework.lastTask1;
+package homework.chernetsov.correction.lastTask1;
 
 import java.util.Arrays;
 

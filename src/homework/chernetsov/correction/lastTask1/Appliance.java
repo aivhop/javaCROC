@@ -1,4 +1,4 @@
-package chernetsov.homework.lastTask1;
+package homework.chernetsov.correction.lastTask1;
 
 public abstract class Appliance {
     private double price;
@@ -42,7 +42,7 @@ public abstract class Appliance {
                 ", weight=" + weight + " kg" +
                 ", width=" + width + " cm" +
                 ", height=" + height + " cm" +
-                ",\ndepth=" + depth + " cm" +
+                ", depth=" + depth + " cm" +
                 ", color=" + color;
     }
 

@@ -6,14 +6,32 @@
   <component name="ChangeListManager">
     <list default="true" id="a97d3ee8-f891-4491-9d2a-3fe7bba19618" name="Changes" comment="half">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/ApplianceImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/ApplianceImported.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/FridgeImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/FridgeImported.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/FridgeWithFreezerImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/FridgeWithFreezerImported.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/StoveImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/StoveImported.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/StoveWithOvenImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/StoveWithOvenImported.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/Task5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/Task5.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask2/Annotation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask2/Annotation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask2/Task6.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chernetsov/homework/lastTask2/Task6.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/first/README.MD" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/old/first/README.MD" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/first/console.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/old/first/console.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/Appliance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/Appliance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/ApplianceImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/ApplianceImported.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/Fridge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/Fridge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/FridgeImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/FridgeImported.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/FridgeWithFreezer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/FridgeWithFreezer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/FridgeWithFreezerImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/FridgeWithFreezerImported.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/Stove.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/Stove.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/StoveImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/StoveImported.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/StoveWithOven.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/StoveWithOven.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/StoveWithOvenImported.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/StoveWithOvenImported.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask1/Task5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/Task5.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask2/AnnotatedImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/AnnotatedImage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask2/Annotation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/Annotation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask2/Circle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/Circle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask2/Figure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/Figure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask2/Movable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/Movable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask2/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/Rectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/lastTask2/Task6.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/Task6.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/old/Task1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/old/Task1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/old/Task1Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/old/Task1Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/old/Task2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/old/Task2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/old/Task2Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/old/Task2Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/old/Task3Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/old/Task3Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chernetsov/homework/old/Task4Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/old/Task4Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +41,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -51,6 +69,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "C:/Users/Alexander/source/java repos/PROJECT/croc/src/Main.java",
     "vue.rearranger.settings.migration": "true"
   }
@@ -62,13 +81,13 @@
       <recent name="C:\Users\Alexander\source\java repos\PROJECT\croc\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Task6">
-    <configuration name="Task1Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="chernetsov.homework.old.Task1Main" />
+  <component name="RunManager" selected="Application.Order">
+    <configuration name="Order" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="homework.chernetsov.task7.Order" />
       <module name="croc" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="chernetsov.homework.old.*" />
+          <option name="PATTERN" value="homework.chernetsov.task7.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -130,11 +149,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Task6" />
+        <item itemvalue="Application.Order" />
         <item itemvalue="Application.Task5" />
+        <item itemvalue="Application.Task6" />
         <item itemvalue="Application.Task3Main" />
         <item itemvalue="Application.Task2Main" />
-        <item itemvalue="Application.Task1Main" />
       </list>
     </recent_temporary>
   </component>
@@ -159,6 +178,14 @@
       <workItem from="1697786441335" duration="16846000" />
       <workItem from="1697831768017" duration="11000" />
       <workItem from="1697873502212" duration="1983000" />
+      <workItem from="1698079817328" duration="16000" />
+      <workItem from="1698098050374" duration="68000" />
+      <workItem from="1698098829633" duration="21000" />
+      <workItem from="1698099310556" duration="16000" />
+      <workItem from="1698169122542" duration="641000" />
+      <workItem from="1698180620309" duration="750000" />
+      <workItem from="1698272882031" duration="946000" />
+      <workItem from="1698341356212" duration="12685000" />
     </task>
     <task id="LOCAL-00001" summary="half">
       <option name="closed" value="true" />

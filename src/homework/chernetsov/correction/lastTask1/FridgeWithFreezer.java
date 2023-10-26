@@ -1,4 +1,4 @@
-package chernetsov.homework.lastTask1;
+package homework.chernetsov.correction.lastTask1;
 
 public class FridgeWithFreezer extends Fridge{
     private int numberOfFreezerShelves;

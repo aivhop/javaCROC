@@ -1,4 +1,4 @@
-package chernetsov.homework.lastTask1;
+package homework.chernetsov.correction.lastTask1;
 
 public class Task5 {
     public static void main(String[] args) {
@@ -48,6 +48,7 @@ public class Task5 {
             System.out.println(ap);
             System.out.println();
         }
+        
 
     }
 }
