@@ -1,24 +1,18 @@
-package homework.chernetsov.correction.lastTask1;
+package homework.chernetsov.correction.lastTask1.stove;
 
 public class StoveWithOven extends Stove{
     double minTemperature;
     double maxTemperature;
     double ovenVolume;
 
+
     public StoveWithOven(double minTemperature, double maxTemperature, double ovenVolume,
                          String coverage, double price, double weight, double width, double height, double depth,
-                         Color color, String description, Burners... burners) {
+                         Color color, String description, Burner.Burners... burners) {
         super(false, coverage, price, weight, width, height, depth, color, description, burners);
-        if (minTemperature <= -273.15) {
-            throw new IllegalArgumentException("Sorry, incorrect minimum temperature");
-        } else if (maxTemperature <= 0 || maxTemperature < minTemperature) {
-            throw new IllegalArgumentException("Sorry, incorrect maximum temperature");
-        } else if (ovenVolume <= 0) {
-            throw new IllegalArgumentException("Sorry, the volume must be greater than zero");
-        }
-        this.minTemperature = minTemperature;
-        this.maxTemperature = maxTemperature;
-        this.ovenVolume = ovenVolume;
+        setMinTemperature(minTemperature);
+        setMaxTemperature(maxTemperature);
+        setOvenVolume(ovenVolume);
     }
 
     @Override

@@ -1,9 +1,10 @@
 package homework.chernetsov.task7;
 
 
-import homework.chernetsov.correction.lastTask1.Appliance;
-import homework.chernetsov.correction.lastTask1.Fridge;
-import homework.chernetsov.correction.lastTask1.Stove;
+import homework.chernetsov.correction.lastTask1.base.Appliance;
+import homework.chernetsov.correction.lastTask1.fridge.Fridge;
+import homework.chernetsov.correction.lastTask1.stove.Burner;
+import homework.chernetsov.correction.lastTask1.stove.Stove;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -113,7 +114,7 @@ public class Order {
         Appliance fridge = new Fridge(3, 10_000,
                 47, 110, 210, 60, Appliance.Color.BLACK, "Standard fridge");
         Appliance stove = new Stove(true, "glass ceramics", 2_000, 1.7, 31,
-                9, 39, Appliance.Color.BLACK, "Cheep stove", Stove.Burners.INDUCTION);
+                9, 39, Appliance.Color.BLACK, "Cheep stove", Burner.Burners.INDUCTION);
 
         Order order = new Order("Chernetsov Alexander", "89822939299", ZonedDateTime.of(2000,1,1,1,1,1,1, ZoneId.of("Europe/Moscow")), fridge, stove);
         order.setAssemblingDateTime(order.getEntranceDateTime().plusDays(1));
