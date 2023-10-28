@@ -5,22 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a97d3ee8-f891-4491-9d2a-3fe7bba19618" name="Changes" comment="half">
-      <change afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/fridge/FridgeImported.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/fridge/FridgeWithFreezerImported.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/stove/StoveImported.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/stove/StoveWithOvenImported.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/Appliance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/base/Appliance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/ApplianceImported.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/Fridge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/fridge/Fridge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/FridgeImported.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/FridgeWithFreezer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/fridge/FridgeWithFreezer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/FridgeWithFreezerImported.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/Stove.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/stove/Stove.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/StoveImported.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/StoveWithOven.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/stove/StoveWithOven.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/StoveWithOvenImported.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/Task5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask1/Task5.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/task7/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/task7/Order.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -72,6 +57,45 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.Order">
+    <configuration name="Order (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="homework.chernetsov.task7.Order" />
+      <module name="croc" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="homework.chernetsov.task7.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Order (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="homework.chernetsov.task7.Order" />
+      <module name="croc" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="homework.chernetsov.task7.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Order (3)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="homework.chernetsov.task7.Order" />
+      <module name="croc" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="homework.chernetsov.task7.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Order" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="homework.chernetsov.task7.Order" />
       <module name="croc" />
@@ -85,51 +109,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Task2Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="chernetsov.homework.old.Task2Main" />
+    <configuration name="homework.chernetsov.correction.lastTask1.Task5" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="homework.chernetsov.correction.lastTask1.Task5" />
       <module name="croc" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="chernetsov.homework.old.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Task3Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="chernetsov.homework.old.Task3Main" />
-      <module name="croc" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="chernetsov.homework.old.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Task5" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="chernetsov.homework.lastTask1.Task5" />
-      <module name="croc" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="chernetsov.homework.lastTask1.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Task6" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="chernetsov.homework.lastTask2.Task6" />
-      <module name="croc" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="chernetsov.homework.lastTask2.*" />
+          <option name="PATTERN" value="homework.chernetsov.correction.lastTask1.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -140,10 +125,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Order" />
-        <item itemvalue="Application.Task5" />
-        <item itemvalue="Application.Task6" />
-        <item itemvalue="Application.Task3Main" />
-        <item itemvalue="Application.Task2Main" />
+        <item itemvalue="Application.Order (3)" />
+        <item itemvalue="Application.Order (2)" />
+        <item itemvalue="Application.Order (1)" />
+        <item itemvalue="Application.homework.chernetsov.correction.lastTask1.Task5" />
       </list>
     </recent_temporary>
   </component>
@@ -177,6 +162,7 @@
       <workItem from="1698272882031" duration="946000" />
       <workItem from="1698341356212" duration="12744000" />
       <workItem from="1698419550588" duration="4298000" />
+      <workItem from="1698446605844" duration="5281000" />
     </task>
     <task id="LOCAL-00001" summary="half">
       <option name="closed" value="true" />
