@@ -15,15 +15,13 @@ import java.time.format.DateTimeFormatter;
 
 public class Order {
     private String id;
-
     final private ZonedDateTime entranceDateTime;
     private ZonedDateTime assemblingDateTime;
     private ZonedDateTime receivingDateTime; // todo подумать над локальным временем и часовыми поясам
-
-    private String fullName;
+    private String fullName; // todo проверка что есть хотя бы имя и фамилия
     private String phone; // если меняем, нужно поменять id заказа todo
-
     private final Appliance[] products; //todo maxsize 75
+
 
     public Order(String fullName, String phone, ZonedDateTime entranceDateTime, Appliance... products) {
         this.fullName = fullName;
@@ -35,9 +33,7 @@ public class Order {
         //todo проверки и исключения
     }
 
-    public void setAssemblingDateTime(ZonedDateTime zonedDateTime) {
-        this.assemblingDateTime = zonedDateTime;
-    }
+
 
     public String getProductsFormatted() {
         return new FormatOrder().getProductsFormatted(products);
@@ -54,7 +50,6 @@ public class Order {
     public String getProductsFormatted(int maxWidthOfMessage, String indent) {
         return new FormatOrder(maxWidthOfMessage, indent).getProductsFormatted(products);
     }
-
 
     private String calculateId() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMddHHmmss");
@@ -84,11 +79,15 @@ public class Order {
         //todo( interface)
     }
 
-    //SETTERS todo
-
+    //SETTERS todo с помощью  них и сделать exceptions
+    public void setAssemblingDateTime(ZonedDateTime zonedDateTime) {
+        this.assemblingDateTime = zonedDateTime;
+    }
 
 
     //GETTERS
+
+
     public String getId() {
         return id;
     }
@@ -116,6 +115,8 @@ public class Order {
     public Appliance[] getProducts() {
         return products;
     }
+
+
 
     public static void main(String[] args) {
         Appliance fridge = new Fridge(3, 10_000,

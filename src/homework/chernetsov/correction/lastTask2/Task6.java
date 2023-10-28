@@ -1,5 +1,8 @@
 package homework.chernetsov.correction.lastTask2;
 
+import homework.chernetsov.correction.lastTask2.figure.Circle;
+import homework.chernetsov.correction.lastTask2.figure.Rectangle;
+
 public class Task6 {
     public static void main(String[] args) {
 

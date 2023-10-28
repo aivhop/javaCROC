@@ -1,4 +1,4 @@
-package homework.chernetsov.correction.lastTask2;
+package homework.chernetsov.correction.lastTask2.figure;
 
 public class Circle extends Figure {
     double xCenter;

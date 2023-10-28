@@ -1,4 +1,5 @@
-package homework.chernetsov.correction.lastTask2;
+package homework.chernetsov.correction.lastTask2.figure;
+
 
 public class Rectangle extends Figure {
 

@@ -1,5 +1,8 @@
 package homework.chernetsov.correction.lastTask2;
 
+import homework.chernetsov.correction.lastTask2.figure.Figure;
+import homework.chernetsov.correction.lastTask2.figure.Movable;
+
 public class Annotation implements Movable {
     private String label;
 
