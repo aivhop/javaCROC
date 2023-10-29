@@ -7,7 +7,6 @@ import homework.chernetsov.task7.serviceOrder.NotificationOrder;
 import homework.chernetsov.task7.serviceOrder.OrderInterface;
 import homework.chernetsov.task7.serviceOrder.TestOrder;
 
-import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 
@@ -64,7 +63,6 @@ public class Order implements OrderInterface {
     public void give(ZonedDateTime time) {
         receivingDateTime = time;
         status = OrderStatus.CLOSED;
-
     }
 
     @Override
@@ -111,24 +109,10 @@ public class Order implements OrderInterface {
     }
 
     @Override
-    public String calculateId() {
-        return OrderInterface.super.calculateId();
-    }
-
-    @Override
     public String getNotification() {
         return NotificationOrder.getNotification(this);
     }
 
-    @Override
-    public BigDecimal getSum() {
-        return OrderInterface.super.getSum();
-    }
-
-    @Override
-    public ZonedDateTime getStorageTime() {
-        return OrderInterface.super.getStorageTime();
-    }
 
     @Override
     public String getStorageTimeFormatted() {
