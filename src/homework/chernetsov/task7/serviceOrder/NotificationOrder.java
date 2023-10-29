@@ -1,4 +1,7 @@
-package homework.chernetsov.task7;
+package homework.chernetsov.task7.serviceOrder;
+
+import homework.chernetsov.task7.Order;
+import homework.chernetsov.task7.serviceOrder.FormatOrder;
 
 public class NotificationOrder {
     public static String getNotification(Order order) {
@@ -18,7 +21,7 @@ public class NotificationOrder {
                                         
                         С наилучшими пожеланиями, магазин “Кошки и картошки”
                 """, order.getFullName(), order.getId(),
-                order.getProductsFormatted(), order.getSum(),
+                order.getProductsFormatted(), FormatOrder.getPriceFormatted(order.getSum()),
                 order.getStorageTimeFormatted());
         //todo( interface)
     }

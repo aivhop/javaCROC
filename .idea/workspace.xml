@@ -6,12 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a97d3ee8-f891-4491-9d2a-3fe7bba19618" name="Changes" comment="half">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/Annotation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/Annotation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/Circle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/figure/Circle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/Figure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/figure/Figure.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/Movable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/figure/Movable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/figure/Rectangle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/Task6.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/correction/lastTask2/Task6.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/task7/FormatOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/task7/serviceOrder/FormatOrder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/task7/NotificationOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/task7/serviceOrder/NotificationOrder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/task7/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/task7/Order.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -89,12 +85,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Order (3)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="Order" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="homework.chernetsov.task7.Order" />
       <module name="croc" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="homework.chernetsov.task7.*" />
+          <option name="PATTERN" value="homework.chernetsov.task7.serviceOrder.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -107,7 +103,33 @@
       <module name="croc" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="homework.chernetsov.task7.*" />
+          <option name="PATTERN" value="homework.chernetsov.task7.serviceOrder.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Order" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="homework.chernetsov.task7.Order" />
+      <module name="croc" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="homework.chernetsov.task7.serviceOrder.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Order" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="homework.chernetsov.task7.Order" />
+      <module name="croc" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="homework.chernetsov.task7.serviceOrder.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -169,7 +191,7 @@
       <workItem from="1698341356212" duration="12744000" />
       <workItem from="1698419550588" duration="4298000" />
       <workItem from="1698446605844" duration="5664000" />
-      <workItem from="1698517861208" duration="260000" />
+      <workItem from="1698517861208" duration="12417000" />
     </task>
     <task id="LOCAL-00001" summary="half">
       <option name="closed" value="true" />

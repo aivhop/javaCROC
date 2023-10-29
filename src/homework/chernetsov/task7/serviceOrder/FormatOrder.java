@@ -1,8 +1,12 @@
-package homework.chernetsov.task7;
+package homework.chernetsov.task7.serviceOrder;
 
 import homework.chernetsov.correction.lastTask1.base.Appliance;
+import homework.chernetsov.task7.Order;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class FormatOrder {
 
@@ -54,7 +58,11 @@ public class FormatOrder {
     public static String getStorageTimeFormatted(Order order) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         return order.getStorageTime().format(formatter);
-        //todo( interface)
+    }
+
+    public static String getPriceFormatted(BigDecimal value){
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.forLanguageTag("Russia"));
+        return format.format(value);
     }
 
     public String getProductsFormatted(Appliance[] products) {
