@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a97d3ee8-f891-4491-9d2a-3fe7bba19618" name="Changes" comment="half">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/task7/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/task7/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/task7/serviceOrder/TestOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/task7/serviceOrder/TestOrder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,7 +189,7 @@
       <workItem from="1698419550588" duration="4298000" />
       <workItem from="1698446605844" duration="5664000" />
       <workItem from="1698517861208" duration="12448000" />
-      <workItem from="1698573906936" duration="1949000" />
+      <workItem from="1698573906936" duration="2172000" />
     </task>
     <task id="LOCAL-00001" summary="half">
       <option name="closed" value="true" />

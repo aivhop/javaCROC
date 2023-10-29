@@ -3,7 +3,6 @@ package homework.chernetsov.task7.serviceOrder;
 import homework.chernetsov.correction.lastTask1.base.Appliance;
 import homework.chernetsov.correction.lastTask1.fridge.Fridge;
 import homework.chernetsov.correction.lastTask1.fridge.FridgeImported;
-import homework.chernetsov.correction.lastTask1.fridge.FridgeWithFreezer;
 import homework.chernetsov.correction.lastTask1.fridge.FridgeWithFreezerImported;
 import homework.chernetsov.correction.lastTask1.stove.*;
 import homework.chernetsov.task7.Order;
