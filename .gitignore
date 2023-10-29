@@ -3,7 +3,7 @@
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-.idea
+.idea/
 croc.iml
 
 ### Eclipse ###
@@ -56,3 +56,4 @@ bin/
 hs_err_pid*
 replay_pid*
 >>>>>>> 75f554b4d9a67c6c41d06f56614e09dbe3c14e55
+/.idea/
