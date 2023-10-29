@@ -2,12 +2,10 @@ package homework.chernetsov.task7;
 
 
 import homework.chernetsov.correction.lastTask1.base.Appliance;
-import homework.chernetsov.correction.lastTask1.fridge.Fridge;
-import homework.chernetsov.correction.lastTask1.stove.Burner;
-import homework.chernetsov.correction.lastTask1.stove.Stove;
 import homework.chernetsov.task7.serviceOrder.FormatOrder;
 import homework.chernetsov.task7.serviceOrder.NotificationOrder;
 import homework.chernetsov.task7.serviceOrder.OrderInterface;
+import homework.chernetsov.task7.serviceOrder.TestOrder;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -222,29 +220,9 @@ public class Order implements OrderInterface {
                 '}';
     }
 
+
     public static void main(String[] args) {
-        Appliance fridge = new Fridge(3, 10_000.001,
-                47, 110, 210, 60, Appliance.Color.BLACK, "Standard fridge");
-        Appliance stove = new Stove(true, "glass ceramics", 2_000.004, 1.7, 31,
-                9, 39, Appliance.Color.BLACK, "Cheep stove", Burner.Burners.INDUCTION, Burner.Burners.ELECTRIC);
-
-
-        Order order = new Order("Chernetsov Alexander Mikhailovich", "89822939299", ZonedDateTime.now(), fridge, stove);
-        order.setCollectingDateTime(order.getCreatingDateTime().plusDays(1));
-        System.out.println(order.getNotification());
-        System.out.println(order.getStatus());
-
-        order = new Order("Chernetsov Alexander Mikhailovich", "89822939299",
-                ZonedDateTime.now().minusDays(21), fridge, stove); // 08.10.2023
-        //order.setCollectingDateTime(ZonedDateTime.now().minusDays(16)); // 13.10.2023
-        //order.setReceivingDateTime(ZonedDateTime.now().minusDays(1)); // 27.10.2023
-        order.collect();
-        order.give();
-        System.out.println(order);
-        // System.out.println(order.tryToGet());
-        //Order order2 = new Order("Chernetsov")
-        //order2.getNotification();
-
-        //todo тест по заказам из практики
+        TestOrder.testNotification();
+        TestOrder.testIsExpired();
     }
 }

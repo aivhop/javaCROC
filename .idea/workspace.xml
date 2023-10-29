@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a97d3ee8-f891-4491-9d2a-3fe7bba19618" name="Changes" comment="half">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/task7/FormatOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/task7/serviceOrder/FormatOrder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/task7/NotificationOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/task7/serviceOrder/NotificationOrder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/homework/chernetsov/task7/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/homework/chernetsov/task7/Order.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -153,7 +151,6 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Order" />
-        <item itemvalue="Application.Order (3)" />
         <item itemvalue="Application.Order (2)" />
         <item itemvalue="Application.Order (1)" />
         <item itemvalue="Application.homework.chernetsov.correction.lastTask1.Task5" />
@@ -191,7 +188,8 @@
       <workItem from="1698341356212" duration="12744000" />
       <workItem from="1698419550588" duration="4298000" />
       <workItem from="1698446605844" duration="5664000" />
-      <workItem from="1698517861208" duration="12417000" />
+      <workItem from="1698517861208" duration="12448000" />
+      <workItem from="1698573906936" duration="1949000" />
     </task>
     <task id="LOCAL-00001" summary="half">
       <option name="closed" value="true" />
