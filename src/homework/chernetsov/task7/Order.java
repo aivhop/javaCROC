@@ -2,6 +2,8 @@ package homework.chernetsov.task7;
 
 
 import homework.chernetsov.correction.lastTask1.base.Appliance;
+import homework.chernetsov.correction.lastTask1.stove.Burner;
+import homework.chernetsov.correction.lastTask1.stove.Stove;
 import homework.chernetsov.task7.serviceOrder.FormatOrder;
 import homework.chernetsov.task7.serviceOrder.NotificationOrder;
 import homework.chernetsov.task7.serviceOrder.OrderInterface;

@@ -16,13 +16,12 @@ public class NotificationOrder {
                                         
                         Сумма к оплате: %s₽
                                         
-                        Срок хранения заказа %s
+                        Срок хранения заказа: %s
                                         
                                         
                         С наилучшими пожеланиями, магазин “Кошки и картошки”
-                """, order.getFullName(), order.getId(),
+                """, order.getFullName(), order.getId() + (order.getCollectingDateTime() == null? " не": ""),
                 order.getProductsFormatted(), FormatOrder.getPriceFormatted(order.getSum()),
-                order.getStorageTimeFormatted());
-        //todo( interface)
+                (order.getCollectingDateTime() == null ? "Извините, заказ еще не собран" : order.getStorageTimeFormatted()));
     }
 }
