@@ -19,6 +19,12 @@ public class TestOrder {
         Order order = new Order("Chernetsov Alexander Mikhailovich", "89822939299", ZonedDateTime.now(), fridge, stove);
         order.setCollectingDateTime(order.getCreatingDateTime().plusDays(1));
         System.out.println(order.getNotification());
+        //test getter
+        Stove stove1 = new Stove(true, "glass ceramics", 2_000, 1.7, 31,
+                9, 39, Appliance.Color.BLACK, "Cheep stove", Burner.Burners.INDUCTION);
+        Appliance[] test = order.getProducts();
+        test[0] = stove1;
+        System.out.println(order.getNotification());
     }
 
     public static void testIsExpired() {
