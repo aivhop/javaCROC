@@ -40,6 +40,8 @@ public class ShowTask {
         comments.add("");
         comments.add("..");
         comments.add("А если некорректных слов несколько, кот например и кошка");
+        comments.add("А это кошкка");
+
 
         myFilter.filterComments(comments,blackList);
 

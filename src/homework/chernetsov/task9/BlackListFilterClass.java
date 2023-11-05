@@ -7,7 +7,7 @@ import java.util.Set;
 public class BlackListFilterClass implements BlackListFilter {
     @Override
     public void filterComments(List<String> comments, Set<String> blackList) {
-        if (comments != null && blackList != null && blackList.size() != 0) {
+        if (comments != null && blackList != null && blackList.isEmpty()) {
             ListIterator<String> it = comments.listIterator();
             while (it.hasNext()) {
                 String comment = it.next();
@@ -19,7 +19,7 @@ public class BlackListFilterClass implements BlackListFilter {
                 for (String word : words) {
                     for (String blackWord : blackList) {
                         if (blackWord != null && isEqualOrMisspellIgnoreCase(word, blackWord)) {
-                            comment = modifyComment(comment,word);
+                            comment = modifyComment(comment, word);
                             it.set(comment);
                             break;
                         }
@@ -62,6 +62,12 @@ public class BlackListFilterClass implements BlackListFilter {
                         if (word1.charAt(i) == word2.charAt(i - 1) && word2.charAt(i) == word1.charAt(i - 1)) {
                             // тогда не нужно ничего делать, эта ошибка уже посчитана
                             continue;
+                        }
+                    } else if (differenceLength == 1) {
+                        //возможно вставлена 1 лишняя буква
+                        if (word1.length() > word2.length() && word1.substring(i+1).equals(word2.substring(i))||
+                                word2.substring(i+1).equals(word1.substring(i))) {
+                            return true;
                         }
                     }
                     countCriticalMisses++;
