@@ -80,4 +80,6 @@ public class FormatOrders {
         }
         return order.toString();
     }
+    
+    private FormatOrders(){}
 }
