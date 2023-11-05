@@ -7,7 +7,7 @@ import java.util.Set;
 public class BlackListFilterClass implements BlackListFilter {
     @Override
     public void filterComments(List<String> comments, Set<String> blackList) {
-        if (comments != null && blackList != null && blackList.isEmpty()) {
+        if (comments != null && blackList != null && !blackList.isEmpty()) {
             ListIterator<String> it = comments.listIterator();
             while (it.hasNext()) {
                 String comment = it.next();
@@ -43,38 +43,46 @@ public class BlackListFilterClass implements BlackListFilter {
     }
 
     private boolean isMisspell(String word1, String word2) {
-        int differenceLength = Math.abs(word1.length() - word2.length());
-        if (differenceLength < 2) {
-            int countCriticalMisses = differenceLength;
-            if (differenceLength == 1) {
-                // если разница равна единице, возможно пользователь пропустил первую букву в слове
-                // Example: ошка - кошка
-                if (word1.length() > word2.length() && word1.substring(1).equals(word2) ||
-                        word2.substring(1).equals(word1)) {
-                    return true;
-                }
-            }
-            for (int i = 0; i < Math.min(word1.length(), word2.length()) && countCriticalMisses < 2; i++) {
-                if (word1.charAt(i) != word2.charAt(i)) { // если несовпадение
-                    if (countCriticalMisses == 1 && differenceLength == 0) {
-                        // если уже было несовпадение, а длины равны, возможно перепутан порядок двух букв,
-                        // тогда нужно попробовать сравнить символ каждого слова с предыдущим другого
-                        if (word1.charAt(i) == word2.charAt(i - 1) && word2.charAt(i) == word1.charAt(i - 1)) {
-                            // тогда не нужно ничего делать, эта ошибка уже посчитана
-                            continue;
-                        }
-                    } else if (differenceLength == 1) {
-                        //возможно вставлена 1 лишняя буква
-                        if (word1.length() > word2.length() && word1.substring(i+1).equals(word2.substring(i))||
-                                word2.substring(i+1).equals(word1.substring(i))) {
-                            return true;
-                        }
-                    }
-                    countCriticalMisses++;
-                }
-            }
-            return countCriticalMisses == 1; // истина если есть только 1 ошибка
+        String longerWord;
+        String shorterWord;
+        if (word1.length() > word2.length()) {
+            longerWord = word1;
+            shorterWord = word2;
+        } else {
+            longerWord = word2;
+            shorterWord = word1;
         }
-        return false;
+        int differenceLength = longerWord.length() - shorterWord.length();
+        if (differenceLength > 1) {
+            return false;
+        }
+        if (differenceLength == 1 && longerWord.substring(1).equals(shorterWord)) {
+            // если разница равна единице, возможно пользователь пропустил первую букву в слове
+            // Example: ошка - кошка
+            return true;
+        }
+        return isMisspell(longerWord, shorterWord, differenceLength);
+    }
+
+    private boolean isMisspell(String longerWord, String shorterWord, int differenceLength) {
+        int countCriticalMisses = differenceLength;
+        for (int i = 0; i < Math.min(longerWord.length(), shorterWord.length()) && countCriticalMisses < 2; i++) {
+            if (longerWord.charAt(i) != shorterWord.charAt(i)) { // если несовпадение
+                if (countCriticalMisses == 1 && differenceLength == 0) {
+                    // если уже было несовпадение, а длины равны, возможно перепутан порядок двух букв,
+                    // тогда нужно попробовать сравнить символ каждого слова с предыдущим другого
+                    if (longerWord.charAt(i) == shorterWord.charAt(i - 1) &&
+                            shorterWord.charAt(i) == longerWord.charAt(i - 1)) {
+                        // тогда не нужно ничего делать, эта ошибка уже посчитана
+                        continue;
+                    }
+                } else if (differenceLength == 1) {
+                    //возможно вставлена 1 лишняя буква
+                    return longerWord.substring(i + 1).equals(shorterWord.substring(i));
+                }
+                countCriticalMisses++;
+            }
+        }
+        return countCriticalMisses == 1; // истина если есть только 1 ошибка
     }
 }
