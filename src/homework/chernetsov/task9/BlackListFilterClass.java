@@ -77,7 +77,7 @@ public class BlackListFilterClass implements BlackListFilter {
                         continue;
                     }
                 } else if (differenceLength == 1) {
-                    //возможно вставлена 1 лишняя буква
+                    //возможно вставлена или пропущена 1 буква
                     return longerWord.substring(i + 1).equals(shorterWord.substring(i));
                 }
                 countCriticalMisses++;

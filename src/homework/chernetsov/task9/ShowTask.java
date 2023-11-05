@@ -10,7 +10,9 @@ public class ShowTask {
         BlackListFilterClass myFilter = new BlackListFilterClass();
 
         List<String> comments = new ArrayList<>();
-        comments.add("А это кошкка");
+        comments.add("кока А если пропущена буква");
+
+
         comments.add("Кот, собака, попугай?");
         comments.add("Кошка");
 
@@ -41,6 +43,8 @@ public class ShowTask {
         comments.add("");
         comments.add("..");
         comments.add("А если некорректных слов несколько, кот например и кошка");
+        comments.add("А это кошкка");
+
 
 
 
