@@ -2,14 +2,13 @@ package homework.chernetsov.task7.serviceOrder;
 
 import java.time.Duration;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 
-public class ReceivingDateException extends RuntimeException {
+
+public class ReceivingDateException extends Exception {
     private final ZonedDateTime storageTime;
     private final ZonedDateTime receivingTime;
 
-    public ReceivingDateException(ZonedDateTime storageTime,ZonedDateTime receivingTime) {
+    public ReceivingDateException(ZonedDateTime storageTime, ZonedDateTime receivingTime) {
         this.storageTime = storageTime;
         this.receivingTime = receivingTime;
     }

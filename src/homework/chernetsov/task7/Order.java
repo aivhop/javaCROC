@@ -1,14 +1,14 @@
 package homework.chernetsov.task7;
 
 
-import homework.chernetsov.correction.lastTask1.base.Appliance;
-import homework.chernetsov.task7.serviceOrder.FormatOrder;
-import homework.chernetsov.task7.serviceOrder.NotificationOrder;
+import homework.chernetsov.task5.base.Appliance;
+import homework.chernetsov.task7.serviceOrder.FormatOrders;
+import homework.chernetsov.task7.serviceOrder.NotificationOrders;
 import homework.chernetsov.task7.serviceOrder.OrderInterface;
-import homework.chernetsov.task7.serviceOrder.TestOrder;
 
 import java.time.ZonedDateTime;
-import java.util.Arrays;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 
 public class Order implements OrderInterface {
@@ -26,115 +26,89 @@ public class Order implements OrderInterface {
     private ZonedDateTime receivingDateTime;
     private String fullName;
     private String phone;
-    private final Appliance[] products;
+    private final ArrayList<Appliance> products;
 
 
-    public Order(String fullName, String phone, ZonedDateTime creatingDateTime, Appliance... products) {
-        if (products.length > 75) {
+    public Order(String fullName, String phone, ZonedDateTime creatingDateTime, ArrayList<Appliance> products) {
+        if (products == null || products.size() == 0) {
+            throw new IllegalArgumentException("Sorry, the order must contain at least one product");
+        }
+        if (products.size() > 75) {
             throw new IllegalArgumentException("Sorry, the order does not support more than 75 items");
         }
-        this.creatingDateTime = creatingDateTime;
+        if (creatingDateTime == null) {
+            throw new IllegalArgumentException("Sorry, the order must have a creation time");
+        }
         this.products = products;
+        this.creatingDateTime = creatingDateTime;
         setFullName(fullName);
-        setPhone(phone);
-        id = calculateId();
+        setPhoneUpdateId(phone);
         status = OrderStatus.CREATED;
     }
 
     @Override
     public void collect() {
-        collectingDateTime = ZonedDateTime.now();
-        status = OrderStatus.COLLECTED;
+        collect(ZonedDateTime.now());
     }
 
     @Override
     public void collect(ZonedDateTime time) {
+        if (isExpiredAndUpdate(time) || status != OrderStatus.CREATED) {
+            throw new IllegalArgumentException("Sorry, the order cannot be collected because it is " +
+                    status.toString());
+        }
+        if (time == null || time.isBefore(creatingDateTime)) {
+            throw new IllegalArgumentException("Sorry, the build time must be after the order creation time");
+        }
         collectingDateTime = time;
         status = OrderStatus.COLLECTED;
     }
 
     @Override
     public void give() {
-        receivingDateTime = ZonedDateTime.now();
-        status = OrderStatus.CLOSED;
+        give(ZonedDateTime.now());
     }
 
     @Override
     public void give(ZonedDateTime time) {
+        if (isExpiredAndUpdate(time) || status != OrderStatus.COLLECTED) {
+            throw new IllegalArgumentException("Sorry, the order cannot be given because it is " +
+                    status.toString());
+        }
+        if (time == null || time.isBefore(collectingDateTime)) {
+            throw new IllegalArgumentException("Sorry, the giving time must be after the collection time");
+        }
         receivingDateTime = time;
         status = OrderStatus.CLOSED;
     }
 
     @Override
-    public boolean isExpired() {
-        if (ZonedDateTime.now().isAfter(getStorageTime())) {
-            status = OrderStatus.EXPIRED;
-            return true;
+    public boolean isExpiredAndUpdate() {
+        return isExpiredAndUpdate(ZonedDateTime.now());
+    }
+
+    @Override
+    public boolean isExpiredAndUpdate(ZonedDateTime time) {
+        if (status == OrderStatus.COLLECTED) {
+            if (time == null || time.isBefore(collectingDateTime)) {
+                throw new IllegalArgumentException("Sorry, the time must be after the collection time");
+            }
+            if (time.isAfter(getStorageTime())) {
+                status = OrderStatus.EXPIRED;
+            }
         }
-        return false;
-    }
-
-    @Override
-    public boolean isExpired(ZonedDateTime time) {
-        if (time.isAfter(getStorageTime())) {
-            status = OrderStatus.EXPIRED;
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean tryToGet() {
-        return OrderInterface.super.tryToGet();
-    }
-
-    @Override
-    public String getProductsFormatted() {
-        return new FormatOrder().getProductsFormatted(products);
-    }
-
-    @Override
-    public String getProductsFormatted(int maxWidthOfMessage) {
-        return new FormatOrder(maxWidthOfMessage).getProductsFormatted(products);
-    }
-
-    @Override
-    public String getProductsFormatted(String indent) {
-        return new FormatOrder(indent).getProductsFormatted(products);
-    }
-
-    @Override
-    public String getProductsFormatted(int maxWidthOfMessage, String indent) {
-        return new FormatOrder(maxWidthOfMessage, indent).getProductsFormatted(products);
+        return status == OrderStatus.EXPIRED;
     }
 
     @Override
     public String getNotification() {
-        return NotificationOrder.getNotification(this);
+        isExpiredAndUpdate();
+        return NotificationOrders.getNotification(this);
     }
-
 
     @Override
     public String getStorageTimeFormatted() {
-        return FormatOrder.getStorageTimeFormatted(this);
-    }
-
-    @Override
-    public void setCollectingDateTime(ZonedDateTime zonedDateTime) {
-        OrderInterface.super.setCollectingDateTime(zonedDateTime);
-        this.collectingDateTime = zonedDateTime;
-    }
-
-    @Override
-    public void setId(String id) {
-        OrderInterface.super.setId(id);
-        this.id = id;
-    }
-
-    @Override
-    public void setReceivingDateTime(ZonedDateTime receivingDateTime) {
-        OrderInterface.super.setReceivingDateTime(receivingDateTime);
-        this.receivingDateTime = receivingDateTime;
+        return FormatOrders.getStorageTimeFormatted(this);
     }
 
     @Override
@@ -144,8 +118,8 @@ public class Order implements OrderInterface {
     }
 
     @Override
-    public void setPhone(String phone) {
-        OrderInterface.super.setPhone(phone);
+    public void setPhoneUpdateId(String phone) {
+        OrderInterface.super.setPhoneUpdateId(phone);
         this.phone = phone;
         this.id = calculateId();
     }
@@ -186,8 +160,8 @@ public class Order implements OrderInterface {
     }
 
     @Override
-    public Appliance[] getProducts() {
-        return products.clone();
+    public ArrayList<Appliance> getProducts() {
+        return new ArrayList<>(products);
     }
 
     @Override
@@ -200,14 +174,32 @@ public class Order implements OrderInterface {
                 ", receivingDateTime=" + receivingDateTime +
                 ", fullName='" + fullName + '\'' +
                 ", phone='" + phone + '\'' +
-                ", products=" + Arrays.toString(products) +
+                ", products=" + products.toString() +
                 '}';
     }
 
-
-    public static void main(String[] args) {
-        TestOrder.testNotification();
-        TestOrder.testIsExpired();
-
+    private String calculateId() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMddHHmmss");
+        return creatingDateTime.format(formatter) + phone.substring(phone.length() - 4);
     }
 }
+/*
+*     @Override
+    public String getProductsFormatted() {
+        return new FormatOrder().getProductsFormatted(products);
+    }
+
+    @Override
+    public String getProductsFormatted(int maxWidthOfMessage) {
+        return new FormatOrder(maxWidthOfMessage).getProductsFormatted(products);
+    }
+
+    @Override
+    public String getProductsFormatted(String indent) {
+        return new FormatOrder(indent).getProductsFormatted(products);
+    }
+
+    @Override
+    public String getProductsFormatted(int maxWidthOfMessage, String indent) {
+        return new FormatOrder(maxWidthOfMessage, indent).getProductsFormatted(products);
+    }*/
