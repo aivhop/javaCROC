@@ -3,6 +3,8 @@ package homework.chernetsov.task9;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BlackListFilterClass implements BlackListFilter {
     @Override
@@ -31,7 +33,23 @@ public class BlackListFilterClass implements BlackListFilter {
 
     private String modifyComment(String comment, String word) {
         StringBuilder refactorComment = new StringBuilder(comment);
-        int ind = refactorComment.indexOf(word);
+        Pattern pattern = Pattern.compile("[\\s\\p{Punct}\\p{Cntrl}]"+word);
+        Matcher matcher = pattern.matcher(comment);
+        Boolean test = matcher.find();
+        int ind = -1;
+        try {
+            ind = matcher.start() + 1;
+        }catch(IllegalStateException ex){
+            try{
+                pattern = Pattern.compile(word + "[\\s\\p{Punct}\\p{Cntrl}]");
+                matcher = pattern.matcher(comment);
+                test = matcher.find();
+                ind = matcher.start();
+            } catch (IllegalStateException e){
+                ind = comment.indexOf(word);
+            }
+        }
+
         refactorComment.replace(ind, ind + word.length(), "*".repeat(word.length()));
         return refactorComment.toString();
     }

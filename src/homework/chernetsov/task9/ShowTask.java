@@ -10,6 +10,9 @@ public class ShowTask {
         BlackListFilterClass myFilter = new BlackListFilterClass();
 
         List<String> comments = new ArrayList<>();
+        comments.add("окошкай");
+
+        comments.add("из открытого окошкай вышла кошка");
         comments.add("кока А если пропущена буква");
 
 
