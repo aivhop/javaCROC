@@ -31,6 +31,6 @@ class AnnotatedImage {
     }
 
     public Annotation[] getAnnotations() {
-        return this.annotations;
+        return this.annotations.clone();
     }
 }

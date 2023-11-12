@@ -36,7 +36,7 @@ public class BlackListFilterClass implements BlackListFilter {
         return refactorComment.toString();
     }
 
-    private boolean isEqualOrMisspellIgnoreCase(String word1, String word2) {
+    public boolean isEqualOrMisspellIgnoreCase(String word1, String word2) {
         word1 = word1.toLowerCase();
         word2 = word2.toLowerCase();
         return word1.equals(word2) || isMisspell(word1, word2);
