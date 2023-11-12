@@ -2,11 +2,10 @@ package homework.chernetsov.task10.testFilter;
 
 
 import homework.chernetsov.task10.BlackListFilter;
-import homework.chernetsov.task9.BlackListFilterClass;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
-import java.util.function.Predicate;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
