@@ -1,4 +1,4 @@
-package task12;
+package homework.chernetsov.task12;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
