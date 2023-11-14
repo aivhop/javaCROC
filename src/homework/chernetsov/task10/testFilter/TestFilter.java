@@ -11,12 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestFilter {
     @Test
-    public void testEmptyComments() {
-        List<String> comments = new ArrayList<>();
-
-    }
-
-    @Test
     public void testSomeExample() {
         List<String> comments = new ArrayList<>(Arrays.asList("кока А если пропущена буква", "Кот, собака, попугай?",
                 "Кошка", "Допустим это первый комментарий, содержащий blackWord_+_+)_+( пусть это будет слово КОШКА",
