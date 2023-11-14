@@ -19,14 +19,6 @@ public class TestCook {
         DishKitchen d5 = new DishKitchen("label5", TestDishKitchen.getIngredientsTest(), DishKitchen.Category.SAUCE, 50, 20);
         return new HashSet<>(Arrays.asList(d1, d2, d3, d4, d5));
     }
-    public static Set<DishKitchen> getDishesTest2() {
-        DishKitchen d1 = new DishKitchen("label1", TestDishKitchen.getIngredientsTest(), DishKitchen.Category.DESSERT, 70, 20);
-        DishKitchen d2 = new DishKitchen("label2", TestDishKitchen.getIngredientsTest(), DishKitchen.Category.SOUP, 20, 40);
-        DishKitchen d3 = new DishKitchen("label3", TestDishKitchen.getIngredientsTest(), DishKitchen.Category.BEVERAGE, 30, 10);
-        DishKitchen d4 = new DishKitchen("label4", TestDishKitchen.getIngredientsTest(), DishKitchen.Category.MAIN, 100, 20);
-        DishKitchen d5 = new DishKitchen("label5", TestDishKitchen.getIngredientsTest(), DishKitchen.Category.SAUCE, 0, 20);
-        return new HashSet<>(Arrays.asList(d1, d2, d3, d4, d5));
-    }
 
     @Test
     public void testName1() {

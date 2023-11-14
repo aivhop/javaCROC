@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public class RoyalKitchen {
-    private HashMap<Cook, Set<DishKitchen>> cookDishes;
+    private final HashMap<Cook, Set<DishKitchen>> cookDishes;
 
     public RoyalKitchen(Collection<Cook> cookers) {
         if (cookers == null || cookers.isEmpty()) {

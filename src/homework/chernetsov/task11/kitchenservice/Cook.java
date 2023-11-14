@@ -26,10 +26,13 @@ public class Cook {
         return fullName + ", dishes=" + dishes;
     }
 
+
     @Override
     public boolean equals(Object o) {
-        if (o == null) return false;
-        return id == ((Cook) o).id;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cook cook = (Cook) o;
+        return id == cook.id;
     }
 
     @Override

@@ -90,11 +90,11 @@ public class TestDishKitchen {
         DishKitchen d1 = new DishKitchen(getCorrectLabel(),getIngredientsTest(),getNormalCategory(),50,40);
         DishKitchen d2 = new DishKitchen(getCorrectLabel(),getIngredientsTest(),getNormalCategory(),50,39);
         DishKitchen d3 = new DishKitchen(getCorrectLabel(),getIngredientsTest(),getNormalCategory(),40,50);
-        assertEquals(d1.compareTo(d2) > 0, true);
-        assertEquals(d1.compareTo(d3) > 0, true);
+        assertTrue(d1.compareTo(d2) > 0);
+        assertTrue(d1.compareTo(d3) > 0);
         DishKitchen d4 = new DishKitchen(getCorrectLabel(),getIngredientsTest(),getNormalCategory(),50,40);
         assertEquals(d1.compareTo(d4), 0);
-        assertEquals(d1.equals(d4), true);
-        assertEquals(d1.hashCode() == d4.hashCode(), true);
+        assertEquals(d1, d4);
+        assertEquals(d1.hashCode(), d4.hashCode());
     }
 }

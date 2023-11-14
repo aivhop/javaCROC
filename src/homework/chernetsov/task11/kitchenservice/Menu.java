@@ -24,9 +24,7 @@ public class Menu {
     private static HashSet<DishKitchen> updateByPredicate(HashSet<DishKitchen> menu, Predicate<DishKitchen> predicate) {
         if (predicate != null) {
             HashSet<DishKitchen> newMenu = new HashSet<>(menu.size());
-            Iterator<DishKitchen> it = menu.iterator();
-            while (it.hasNext()) {
-                DishKitchen d = it.next();
+            for (DishKitchen d : menu) {
                 if (predicate.test(d)) {
                     newMenu.add(d);
                 }
