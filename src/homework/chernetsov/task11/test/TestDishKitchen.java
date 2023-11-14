@@ -1,6 +1,7 @@
 package homework.chernetsov.task11.test;
 
-import homework.chernetsov.task11.Dish;
+import homework.chernetsov.task11.kitchenservice.DishKitchen;
+import homework.chernetsov.task11.exception.IncorrectRatingException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -9,16 +10,16 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class TestDish {
+public class TestDishKitchen {
     public static ArrayList<String> getIngredientsTest() {
         return new ArrayList<>(Arrays.asList("tomato", "water", "salt", "carrot", "bread"));
     }
 
-    public Dish.Category getNormalCategory() {
-        return Dish.Category.MAIN;
+    public DishKitchen.Category getNormalCategory() {
+        return DishKitchen.Category.MAIN;
     }
 
-    public Dish.Category getNullCategory() {
+    public DishKitchen.Category getNullCategory() {
         return null;
     }
 
@@ -42,14 +43,14 @@ public class TestDish {
         return "";
     }
 
-    public Dish getCorrectDish() {
-        return new Dish(getCorrectLabel(), getIngredientsTest(), getNormalCategory(), getCorrectRating(), getCorrectRating());
+    public DishKitchen getCorrectDish() {
+        return new DishKitchen(getCorrectLabel(), getIngredientsTest(), getNormalCategory(), getCorrectRating(), getCorrectRating());
     }
 
     @Test
     public void testDishLabelNull() {
         Throwable thrown = assertThrows(IllegalArgumentException.class, () ->
-                new Dish(null, getIngredientsTest(), getNormalCategory(), getCorrectRating(), getCorrectRating())
+                new DishKitchen(null, getIngredientsTest(), getNormalCategory(), getCorrectRating(), getCorrectRating())
         );
         assertNotNull(thrown.getMessage());
     }
@@ -57,41 +58,41 @@ public class TestDish {
     @Test
     public void testDishLabelEmpty() {
         Throwable thrown = assertThrows(IllegalArgumentException.class, () ->
-                new Dish(getEmptyLabel(), getIngredientsTest(), getNormalCategory(), getCorrectRating(), getCorrectRating())
+                new DishKitchen(getEmptyLabel(), getIngredientsTest(), getNormalCategory(), getCorrectRating(), getCorrectRating())
         );
         assertNotNull(thrown.getMessage());
     }
 
     @Test
     public void testDishNormal() {
-        assertEquals(new Dish(getCorrectLabel(), getIngredientsTest(),
+        assertEquals(new DishKitchen(getCorrectLabel(), getIngredientsTest(),
                 getNormalCategory(), getCorrectRating(), getCorrectRating()),
                 getCorrectDish());
 
     }
     @Test
     public void testDishRatingKingIncorrect(){
-        Throwable thrown = assertThrows(IllegalArgumentException.class, () ->
-                new Dish(getCorrectLabel(), getIngredientsTest(), getNormalCategory(), getIncorrectRating(), getCorrectRating())
+        Throwable thrown = assertThrows(IncorrectRatingException.class, () ->
+                new DishKitchen(getCorrectLabel(), getIngredientsTest(), getNormalCategory(), getIncorrectRating(), getCorrectRating())
         );
         assertNotNull(thrown.getMessage());
     }
     @Test
     public void testDishRatingCourtiersIncorrect(){
-        Throwable thrown = assertThrows(IllegalArgumentException.class, () ->
-                new Dish(getCorrectLabel(), getIngredientsTest(), getNormalCategory(), getCorrectRating(), getIncorrectRating())
+        Throwable thrown = assertThrows(IncorrectRatingException.class, () ->
+                new DishKitchen(getCorrectLabel(), getIngredientsTest(), getNormalCategory(), getCorrectRating(), getIncorrectRating())
         );
         assertNotNull(thrown.getMessage());
     }
 
     @Test
     public void testDishCompareEqualsHash(){
-        Dish d1 = new Dish(getCorrectLabel(),getIngredientsTest(),getNormalCategory(),50,40);
-        Dish d2 = new Dish(getCorrectLabel(),getIngredientsTest(),getNormalCategory(),50,39);
-        Dish d3 = new Dish(getCorrectLabel(),getIngredientsTest(),getNormalCategory(),40,50);
+        DishKitchen d1 = new DishKitchen(getCorrectLabel(),getIngredientsTest(),getNormalCategory(),50,40);
+        DishKitchen d2 = new DishKitchen(getCorrectLabel(),getIngredientsTest(),getNormalCategory(),50,39);
+        DishKitchen d3 = new DishKitchen(getCorrectLabel(),getIngredientsTest(),getNormalCategory(),40,50);
         assertEquals(d1.compareTo(d2) > 0, true);
         assertEquals(d1.compareTo(d3) > 0, true);
-        Dish d4 = new Dish(getCorrectLabel(),getIngredientsTest(),getNormalCategory(),50,40);
+        DishKitchen d4 = new DishKitchen(getCorrectLabel(),getIngredientsTest(),getNormalCategory(),50,40);
         assertEquals(d1.compareTo(d4), 0);
         assertEquals(d1.equals(d4), true);
         assertEquals(d1.hashCode() == d4.hashCode(), true);

@@ -183,23 +183,3 @@ public class Order implements OrderInterface {
         return creatingDateTime.format(formatter) + phone.substring(phone.length() - 4);
     }
 }
-/*
-*     @Override
-    public String getProductsFormatted() {
-        return new FormatOrder().getProductsFormatted(products);
-    }
-
-    @Override
-    public String getProductsFormatted(int maxWidthOfMessage) {
-        return new FormatOrder(maxWidthOfMessage).getProductsFormatted(products);
-    }
-
-    @Override
-    public String getProductsFormatted(String indent) {
-        return new FormatOrder(indent).getProductsFormatted(products);
-    }
-
-    @Override
-    public String getProductsFormatted(int maxWidthOfMessage, String indent) {
-        return new FormatOrder(maxWidthOfMessage, indent).getProductsFormatted(products);
-    }*/

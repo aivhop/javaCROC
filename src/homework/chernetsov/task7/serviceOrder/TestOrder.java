@@ -42,7 +42,7 @@ public class TestOrder {
         Order orderExp = new Order("Chernetsov Alexander", "89822939299", ZonedDateTime.now().minusDays(30),array);
         orderExp.collect(ZonedDateTime.now().minusDays(29));
         System.out.println("Сообщение после истечении срока хранения заказа: ");
-        System.out.println(orderExp.getNotification()); //todo обновление статуса
+        System.out.println(orderExp.getNotification());
         System.out.println("-------------------------\n");
 
 
