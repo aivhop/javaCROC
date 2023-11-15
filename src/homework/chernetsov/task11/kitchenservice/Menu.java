@@ -42,9 +42,6 @@ public class Menu {
         HashSet<DishKitchen> menu = new HashSet<>();
         for (Cook cook : cooksInKitchenToday) {
             Set<DishKitchen> dishes = allCookAndDish.get(cook);
-            if (dishes == null) {
-                throw new RuntimeException();//todo
-            }
             for (DishKitchen dish : dishes) {
                 if (canCookDish(dish, absentIngredients)) {
                     menu.add(dish);

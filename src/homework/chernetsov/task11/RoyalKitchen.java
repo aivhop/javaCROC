@@ -14,24 +14,18 @@ public class RoyalKitchen {
         if (cookers == null || cookers.isEmpty()) {
             throw new IllegalArgumentException("Sorry, there must be at least one cook");
         }
-        if (cookers.contains(null)) {
-            throw new IllegalArgumentException("Sorry, incorrect cook in collection - null");
-        }
+        cookers.forEach(Objects::requireNonNull);
         cookDishes = new HashMap<>();
         for (Cook cook : cookers) {
             cookDishes.put(cook, cook.getDishes());
         }
     }
-
-    //todo null or not working telegram check
-    public void dismiss(Cook cook) {
-        cookDishes.remove(cook);
+    public boolean dismiss(Cook cook) {
+        return cookDishes.remove(cook) != null;
     }
 
-    public void employ(Cook cook) {
-        if (cookDishes.putIfAbsent(cook, cook.getDishes()) != null) {
-            throw new IllegalArgumentException("Sorry, such a cook has already been hired");
-        }
+    public boolean employ(Cook cook) {
+        return cookDishes.putIfAbsent(cook, cook.getDishes()) == null;
     }
 
     public HashMap<Cook, Set<DishKitchen>> getCookDishes() {
@@ -39,14 +33,12 @@ public class RoyalKitchen {
     }
 
 
-    //todo see telegram
     public void learnNewRecipe(Collection<DishKitchen> dishes, Collection<Cook> cookers) {
         if (cookers == null || cookers.isEmpty()) {
             throw new IllegalArgumentException("Sorry, there is no one to learn recipes for new dishes");
         }
-        //cookers.forEach(Objects::requireNonNull);//?
         for (Cook cook : cookers) {
-            if (cook != null) { //or that
+            if (cook != null) {
                 cook.learnNewRecipe(dishes);
                 cookDishes.put(cook, cook.getDishes());
             }

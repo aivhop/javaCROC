@@ -45,7 +45,11 @@ public class ShowTask {
         System.out.println("----------------SHOW UPDATE-------------------------");
         kitchen.dismiss(cook1);
         kitchen2.dismiss(cook7);
-        kitchen2.dismiss(cook5);
+        System.out.println(kitchen2.dismiss(cook5));
+        System.out.println(kitchen2.employ(cook5));
+        System.out.println(kitchen2.employ(cook5));
+        System.out.println(kitchen2.dismiss(cook5));
+        System.out.println(kitchen2.dismiss(cook5));
 
         System.out.println("Kitchen first:");
         System.out.println(kitchen);
