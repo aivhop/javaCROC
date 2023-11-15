@@ -64,9 +64,8 @@ public class Cook {
     public void setDishes(Set<DishKitchen> dishes) {
         if (dishes == null || dishes.isEmpty()) {
             throw new IllegalArgumentException("Sorry, there must be at least one dish");
-        } else if (dishes.contains(null)) {
-            throw new IllegalArgumentException("Sorry, the dishes can't contain null");
         }
+        dishes.forEach(Objects::requireNonNull);
         this.dishes = dishes;
 
     }

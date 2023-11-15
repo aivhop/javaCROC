@@ -41,6 +41,8 @@ public class RoyalKitchen {
             if (cook != null) {
                 cook.learnNewRecipe(dishes);
                 cookDishes.put(cook, cook.getDishes());
+            }else{
+                throw new IllegalArgumentException("Sorry, cook can't be null");
             }
         }
     }
