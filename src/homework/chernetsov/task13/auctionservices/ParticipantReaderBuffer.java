@@ -36,15 +36,4 @@ public class ParticipantReaderBuffer {
     public HashSet<Participant> getParticipants() {
         return new HashSet<>(participants);
     }
-
-    public static void main(String[] args) {
-        System.out.println(Character.isLetter('ё'));
-        try {
-
-            ParticipantReaderBuffer reader1 = new ParticipantReaderBuffer("src/homework/chernetsov/task13/resource/participants.txt");
-            reader1.getParticipants().forEach(System.out::println);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
 }

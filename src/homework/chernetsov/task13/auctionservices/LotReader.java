@@ -46,9 +46,4 @@ public class LotReader {
         return  lotName + ": " + lotValue;
     }
 
-    public static void main(String[] args) throws IncorrectLotFile {
-        LotReader lotReader = new LotReader("src/homework/chernetsov/task13/resource/lot.txt");
-        //BufferedReader reader = new BufferedReader(new FileReader("src/homework/chernetsov/task13/lot.txt"));
-        System.out.println(lotReader);
-    }
 }
