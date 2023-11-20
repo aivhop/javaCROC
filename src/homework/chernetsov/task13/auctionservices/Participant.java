@@ -1,13 +1,18 @@
-package homework.chernetsov.task13;
+package homework.chernetsov.task13.auctionservices;
 
 import java.util.Objects;
 
-public record Participant(String firstname, String surname, int id) {
+public record Participant(String name, int id) {
     private static int nextId = 0;
-    public Participant(String firstname, String surname) {
-        this(firstname,surname,nextId);
+
+    public Participant(String name) {
+        this(name, nextId);
+        if(name == null || name.isEmpty()){
+            throw new IllegalArgumentException("Sorry, the name can't be empty");
+        }
         nextId++;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -24,6 +29,6 @@ public record Participant(String firstname, String surname, int id) {
 
     @Override
     public String toString() {
-        return id + ": " + firstname + " " + surname;
+        return id + ": " + name;
     }
 }
