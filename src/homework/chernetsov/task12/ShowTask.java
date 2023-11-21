@@ -36,9 +36,6 @@ public class ShowTask {
         System.out.println("My ternary: " + (MyTernaryOperator.ternary(predicate1, funct1, funct2)).apply(x));
 
 
-
-
-
         x = -100;
 
         System.out.println("Standard ternary: " + (x > 0 ? x : "Not positive" + x));
@@ -56,15 +53,15 @@ public class ShowTask {
         String test2 = "ABC";
 
         System.out.println("Standard ternary: " +
-                ((test1.chars().allMatch(Character::isLetter))? test1.toLowerCase() :test1.length() ));
+                ((test1.chars().allMatch(Character::isLetter)) ? test1.toLowerCase() : test1.length()));
         System.out.println("My ternary: " +
                 (MyTernaryOperator.ternary((String s) -> s.chars().allMatch(Character::isLetter),
-                        String::toLowerCase, String::length )).apply(test1));
+                        String::toLowerCase, String::length)).apply(test1));
 
         System.out.println("Standard ternary: " +
-                ((test2.chars().allMatch(Character::isLetter))? test2.toLowerCase() :test2.length() ));
+                ((test2.chars().allMatch(Character::isLetter)) ? test2.toLowerCase() : test2.length()));
         System.out.println("My ternary: " +
                 (MyTernaryOperator.ternary((String s) -> s.chars().allMatch(Character::isLetter),
-                        String::toLowerCase, String::length )).apply(test2));
+                        String::toLowerCase, String::length)).apply(test2));
     }
 }
