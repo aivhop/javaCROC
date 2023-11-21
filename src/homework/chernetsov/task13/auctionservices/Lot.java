@@ -26,7 +26,7 @@ public class Lot {
         this(currentValue, null, endTime);
     }
 
-    public BigDecimal getCurrentValue() {
+    synchronized public BigDecimal getCurrentValue() {
         return currentValue;
     }
 
@@ -34,15 +34,15 @@ public class Lot {
         return currentParticipant;
     }
 
-    public ZonedDateTime getEndTime() {
+    synchronized public ZonedDateTime getEndTime() {
         return endTime;
     }
 
-    public Participant getWinner() {
+    synchronized public Participant getWinner() {
         return ZonedDateTime.now().isBefore(endTime) ? null : currentParticipant;
     }
 
-    public boolean placeBet(Participant participant, BigDecimal value) throws InvalidBetTime {
+    synchronized public boolean placeBet(Participant participant, BigDecimal value) throws InvalidBetTime {
         ZonedDateTime betTime = ZonedDateTime.now();
         if (betTime.isAfter(endTime)) {
             throw new InvalidBetTime(betTime, endTime);

@@ -1,4 +1,4 @@
-package homework.chernetsov.task13;
+package homework.chernetsov.task13.auction;
 
 import homework.chernetsov.task13.auctionservices.Lot;
 import homework.chernetsov.task13.auctionservices.Participant;
@@ -37,9 +37,12 @@ public class Auction {
         return currentLot.getEndTime().isBefore(ZonedDateTime.now());
     }
 
-
     public Lot getCurrentLot() {
         return currentLot;
+    }
+
+    public String getLotName() {
+        return lotName;
     }
 
     public void setCurrentLot(Lot currentLot) {

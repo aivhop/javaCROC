@@ -1,15 +1,14 @@
 package homework.chernetsov.task13;
 
+import homework.chernetsov.task13.auction.Auction;
 import homework.chernetsov.task13.auctionservices.Participant;
 
 import java.math.BigDecimal;
 
-import java.sql.SQLOutput;
 import java.util.Objects;
 import java.util.Random;
 
 public class ParticipantAuction implements Runnable {
-    private static final Object lock = new Object();
     private final Participant participant;
     private final int numberAttempts;
     private final Auction auction;
@@ -34,32 +33,25 @@ public class ParticipantAuction implements Runnable {
         Random random = new Random(System.currentTimeMillis());
         for (int i = 0; i < numberAttempts; i++) {
 
-            BigDecimal bet = new BigDecimal(random.nextInt());
+            BigDecimal bet = new BigDecimal(Math.abs(random.nextInt()));
+            StringBuffer info = new StringBuffer(participant + " try: ");
             BigDecimal currentValue = auction.getCurrentValue();
-            Participant winner = auction.getWinner();
-
-            String info = participant + " try: ";
-
-
-            try { //todo((
-                System.out.println(new StringBuffer(info)
-                        .append(" Current value ")
-                        .append(auction.getCurrentValue())
-                        .append(" getWinner() ")
-                        .append(auction.getWinner())
-                        .append(" isOver() ")
-                        .append(auction.isOver())
-                        .append(" placeBet() ")
-                        .append(auction.placeBet(participant, bet)));
-                /*System.out.println("Current value " + auction.getCurrentValue());
-                System.out.println("getWinner() " + auction.getWinner());
-                System.out.println("placeBet() " + auction.placeBet(participant, bet));
-                System.out.println("isOver() " + auction.isOver());*/
+            boolean placeBet;
+            try {
+                placeBet = auction.placeBet(participant, bet);
             } catch (Exception ex) {
                 System.out.println("end time, participant " + participant);
                 break;
             }
+            Participant winner = auction.getWinner();
 
+            info.append(" Current value ")
+                    .append(currentValue)
+                    .append(" placeBet() ")
+                    .append(placeBet)
+                    .append(" getWinner() ") //always null because while auction in progress nobody win
+                    .append(winner);
+            System.out.println(info);
         }
     }
 }
