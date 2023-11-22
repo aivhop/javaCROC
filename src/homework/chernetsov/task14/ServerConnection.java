@@ -14,7 +14,6 @@ public class ServerConnection implements Runnable {
     private PrintWriter writer;
     private BufferedReader reader;
 
-    private Thread write;
 
     public ServerConnection(Socket socket, Server server) {//todo exceptions
         this.socket = socket;
@@ -28,20 +27,13 @@ public class ServerConnection implements Runnable {
              BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
             this.writer = writer;
             this.reader = reader;
-            this.write = new Thread(new WriteMsg());
-            Thread read = new Thread(new WriteMsg());
+            Thread read = new Thread(new ReadMsg());
 
             writer.write("Type your name:\n");
             writer.flush();
-            writer.close();
-            System.out.println("IN CONNETCIOn");
-            clientName = reader.readLine();
 
-            /*while (clientName == null || clientName.isEmpty()) {
-                clientName = reader.readLine(); //todo exceptions
-                System.out.println("in clientNam");
-                System.out.println(clientName);
-            }*/
+
+            read.start();
 
             server.addClient(clientName, this);
             System.out.println("New client, hello " + clientName);
@@ -65,10 +57,15 @@ public class ServerConnection implements Runnable {
         public void run() {
             String message;
             while (true) {
+
                 try {
                     message = reader.readLine();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
+                }
+                if(clientName == null){
+                    clientName = message;
+                    continue;
                 }
                 if (message == null || message.isEmpty()) {
                     continue;
@@ -85,26 +82,6 @@ public class ServerConnection implements Runnable {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                }
-            }
-        }
-    }
-
-    private class WriteMsg implements Runnable {
-        @Override
-        public void run() {
-
-            String message;
-            while (true) {
-                try {
-                    message = readerConsole.readLine();
-                    if (message != null && !message.isEmpty()) {
-                        writer.write(message);
-                        writer.flush();
-                        System.out.println("do flush");
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
                 }
             }
         }
