@@ -1,7 +1,5 @@
 package homework.chernetsov.task14;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,21 +11,21 @@ import java.util.Set;
 public class Server {
     private HashMap<ServerConnection, String> clients = new HashMap<>();
 
-    public final String LOCAL_HOST = "127.0.0.1";
-    public static final int DEFAULT_PORT = 2021;
-
+    public static final String LOCAL_HOST = "127.0.0.1";
+    public static final int DEFAULT_PORT = 8080;
     private final ServerSocket serverSocket;
     private final int port;
 
-    public HashMap<ServerConnection, String> getClients() {
+    synchronized public HashMap<ServerConnection, String> getClients() {
         return new HashMap<>(clients);
     }
 
-    public Set<ServerConnection> getConnections() {
+    //todo synchronized?
+    synchronized public Set<ServerConnection> getConnections() {
         return clients.keySet();
     }
 
-    public void addClient(String clientName, ServerConnection connection) {
+    synchronized public void addClient(String clientName, ServerConnection connection) {
         clients.put(connection, clientName);
     }
 
@@ -37,16 +35,22 @@ public class Server {
 
     public void start() throws IOException {
         System.out.println("Start server\n");
-        try {
-            while (true) {//todo exceptions
+
+        while (true) {//todo exceptions
+            try {
                 Socket client = serverSocket.accept();
                 ServerConnection connection = new ServerConnection(client, this);
                 Thread thread = new Thread(connection);
                 thread.start();
+            } catch (IOException e) {
+                throw new RuntimeException(e);//todo exceptions
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);//todo exceptions
-        } finally {
+        }
+
+    }
+
+    public void end() throws IOException {
+        if (!serverSocket.isClosed()) {
             serverSocket.close();
         }
     }
@@ -72,8 +76,8 @@ public class Server {
 
     public static void main(String[] args) {
         try {
-
             Server myServ = new Server();
+            myServ.start();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

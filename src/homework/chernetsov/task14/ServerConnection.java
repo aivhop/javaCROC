@@ -1,16 +1,20 @@
 package homework.chernetsov.task14;
 
 import java.io.*;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Objects;
 
 public class ServerConnection implements Runnable {
 
     private Server server;
+
     private Socket socket;
     private String clientName;
-    private BufferedWriter writer;
+    private PrintWriter writer;
     private BufferedReader reader;
+
+    private Thread write;
 
     public ServerConnection(Socket socket, Server server) {//todo exceptions
         this.socket = socket;
@@ -20,29 +24,28 @@ public class ServerConnection implements Runnable {
     @Override
     public void run() {
         String message;
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+        try (PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
             this.writer = writer;
             this.reader = reader;
+            this.write = new Thread(new WriteMsg());
+            Thread read = new Thread(new WriteMsg());
+
             writer.write("Type your name:\n");
             writer.flush();
-            clientName = reader.readLine(); //todo exceptions
+            writer.close();
+            System.out.println("IN CONNETCIOn");
+            clientName = reader.readLine();
+
+            /*while (clientName == null || clientName.isEmpty()) {
+                clientName = reader.readLine(); //todo exceptions
+                System.out.println("in clientNam");
+                System.out.println(clientName);
+            }*/
+
             server.addClient(clientName, this);
-            while (true) {
-                message = reader.readLine();
-                if (message == null || message.isEmpty()) {
-                    continue;
-                }
-                if (message.equals("/exit")) {
-                    break;
-                }
-                for (ServerConnection connection : server.getConnections()) {
-                    if (connection.equals(this)) {
-                        continue;
-                    }
-                    connection.send(clientName + ": " + message);
-                }
-            }
+            System.out.println("New client, hello " + clientName);
+
         } catch (IOException e) {
             throw new RuntimeException(e);//todo
         } finally {
@@ -56,6 +59,57 @@ public class ServerConnection implements Runnable {
             server.removeClient(this);
         }
     }
+
+    private class ReadMsg implements Runnable {
+        @Override
+        public void run() {
+            String message;
+            while (true) {
+                try {
+                    message = reader.readLine();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                if (message == null || message.isEmpty()) {
+                    continue;
+                }
+                if (message.equals("/exit")) {
+                    break;
+                }
+                for (ServerConnection connection : server.getConnections()) {
+                    if (connection.equals(this)) {
+                        continue;
+                    }
+                    try {
+                        connection.send(clientName + ": " + message);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }
+    }
+
+    private class WriteMsg implements Runnable {
+        @Override
+        public void run() {
+
+            String message;
+            while (true) {
+                try {
+                    message = readerConsole.readLine();
+                    if (message != null && !message.isEmpty()) {
+                        writer.write(message);
+                        writer.flush();
+                        System.out.println("do flush");
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
 
     public void send(String message) throws IOException {//todo exceptions
         writer.write(message + '\n');
