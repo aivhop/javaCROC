@@ -1,21 +1,17 @@
 package homework.chernetsov.task14.server;
 
+import homework.chernetsov.task14.exceptions.ConnectionCreationError;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Server {
     private final int port;
     public static final int DEFAULT_PORT = 2023;
-    public static final String LOCAL_HOST = "127.0.0.1";
 
-    private final PrintWriter writerLog;
-
-    private ArrayList<Connection> connections = new ArrayList<>();
-    //todo hashmap name + connection
-
-    private boolean isWork = false;
+    private final HashMap<String, Connection> connections = new HashMap<>();
 
     public Server(int port) {
         this.port = port;
@@ -25,63 +21,70 @@ public class Server {
         this(DEFAULT_PORT);
     }
 
-    //todo clear clients- if he left
-    //todo не отправлять пустое сообщение
+
     public void start() {
         System.out.println("Server starting...\n");
-        isWork = true;
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Successful started, port: " + port);
-            while (isWork) {
+            while (true) {
                 Socket client = serverSocket.accept();
-                Connection connection = new Connection(client);
-                connections.add(connection);
-                Thread thread = new Thread(connection);
-                thread.start();
+                try {
+                    Connection connection = new Connection(client);
+                    new Thread(connection).start();
+                } catch (ConnectionCreationError ex) {
+                    System.err.println("Не удалось соединиться с пользователем: " + ex.getMessage());
+                }
             }
         } catch (IOException ex) {
-            throw new RuntimeException(ex);//todo mb custom
+            throw new IllegalArgumentException(ex);
         }
     }
 
+    public void close() {
+        connections.values().forEach((Connection c) -> c.sendMessage("The server is closed, goodbye"));
+        connections.clear();
+    }
+
+
     private class Connection implements Runnable {
-        Socket clientSocket;//todo modificator
-        String clientName;
+        private Socket clientSocket;
+        private String clientName;
 
-        BufferedReader reader;
+        private BufferedReader reader;
 
-        PrintWriter writer;
+        private PrintWriter writer;
 
-        boolean isConnected = false;
-
-        public Connection(Socket clientSocket) {
+        public Connection(Socket clientSocket) throws ConnectionCreationError {
             this.clientSocket = clientSocket;
             try {
                 this.reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 this.writer = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
             } catch (IOException ex) {
-                System.err.println(ex.getMessage());//todo log
+                throw new ConnectionCreationError(ex);
             }
-            isConnected = true;
         }
 
-        private void initName(){
-            writer.println("Hello, type your name:\n");
-            try {
-                String name = reader.readLine();
-                while (name.isEmpty()){
-                    writer.println("Your name can't be empty, type something please:\n");
-                    name = reader.readLine();
+        private void initName() {
+            writer.println("Hello, type your name: ");
+            while (clientName == null) {
+                try {
+                    String name = reader.readLine();
+                    while (name.isEmpty()) {
+                        writer.println("Your name can't be empty, type something please: ");
+                        name = reader.readLine();
+                    }
+                    clientName = name;
+                    writer.println("Welcome, " + clientName);
+                    sendToAll("New user: " + clientName + ", say hello");
+                } catch (IOException e) {
+                    System.err.println("Error in reading message: " + e.getMessage());
+                    writer.println("Error, try again please: ");
                 }
-                clientName = name;
-                writer.println("Welcome, " + clientName);
-            } catch (IOException e) {
-                //todo log
-                throw new RuntimeException(e);//todo custom exception
             }
         }
-        private void send(String message){
-            for (Connection connection : connections) {
+
+        private void sendToAll(String message) {
+            for (Connection connection : connections.values()) {
                 if (connection == this) {
                     continue;
                 }
@@ -89,23 +92,39 @@ public class Server {
             }
         }
 
+        public void sendMessage(String message) {
+            writer.println(message);
+        }
+
         @Override
         public void run() {
             initName();
+            connections.put(clientName, this);
             System.out.println("New user: " + clientName);
-            while (isConnected && isWork) {
-                try {
+
+            try {
+                while (true) {
                     String message = reader.readLine();
-                    System.out.println(message);//todo log
-                    send(message);
-                } catch (IOException e) {
-                    System.err.println(e.getMessage());//todo log.txt
+                    if (!message.isEmpty()) {
+                        message = clientName + ": " + message;
+                        System.out.println(message);
+                        sendToAll(message);
+                    }
                 }
+            } catch (IOException e) {
+                closeConnection(e.getMessage());
             }
         }
 
-    }
 
+        private void closeConnection(String errorMsg) {
+            String message = clientName + " left";
+            System.out.println(errorMsg + ": " + message);
+            connections.remove(clientName, this);
+            sendToAll(message);
+        }
+
+    }
 
     public static void main(String[] args) {
         Server server = new Server();
