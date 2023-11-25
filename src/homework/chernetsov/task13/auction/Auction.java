@@ -10,39 +10,57 @@ import java.util.Objects;
 
 public class Auction {
     private Lot currentLot;
-    private final String lotName;
+    private ZonedDateTime endTime;
 
-    public Auction(Lot currentLot, String lotName) {
-        Objects.requireNonNull(currentLot);
-        if (lotName == null || lotName.isEmpty()) {
-            throw new IllegalArgumentException("Sorry, the дot name can't be empty");
-        }
-        this.currentLot = currentLot;
-        this.lotName = lotName;
+    public Auction(Lot currentLot, ZonedDateTime endTime) {
+        setCurrentLot(currentLot);
+        setEndTime(endTime);
     }
 
-    synchronized public BigDecimal getCurrentValue() {
+    public Participant getWinner() {
+        return ZonedDateTime.now().isBefore(getEndTime()) ? null : getCurrentParticipant();
+    }
+
+    public boolean placeBet(Participant participant, BigDecimal value) throws InvalidBetTime {
+        ZonedDateTime betTime = ZonedDateTime.now();
+        if (betTime.isAfter(getEndTime())) {
+            throw new InvalidBetTime(betTime, getEndTime());
+        }
+        if (value.compareTo(getCurrentValue()) <= 0) {
+            return false;
+        }
+        synchronized (this) {
+            if (value.compareTo(getCurrentValue()) > 0) {
+                currentLot.setCurrentValue(value);
+                currentLot.setCurrentParticipant(participant);
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public BigDecimal getCurrentValue() {
         return currentLot.getCurrentValue();
     }
 
-    synchronized public Participant getWinner() {
-        return currentLot.getWinner();
-    }
-
-    synchronized public boolean placeBet(Participant participant, BigDecimal value) throws InvalidBetTime {
-        return currentLot.placeBet(participant, value);
-    }
-
-    synchronized public boolean isOver() {
-        return currentLot.getEndTime().isBefore(ZonedDateTime.now());
-    }
-
-    public Lot getCurrentLot() {
-        return currentLot;
+    public Participant getCurrentParticipant() {
+        return currentLot.getCurrentParticipant();
     }
 
     public String getLotName() {
-        return lotName;
+        return currentLot.getName();
+    }
+
+    public ZonedDateTime getEndTime() {
+        return endTime;
+    }
+
+
+    public void setEndTime(ZonedDateTime endTime) {
+        if (endTime.isBefore(ZonedDateTime.now())) {
+            throw new IllegalArgumentException("Sorry, a new lot that is already closed doesn't make sense");
+        }
+        this.endTime = endTime;
     }
 
     public void setCurrentLot(Lot currentLot) {

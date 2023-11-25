@@ -1,7 +1,6 @@
 package homework.chernetsov.task14;
 
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Objects;
 
@@ -27,46 +26,13 @@ public class ServerConnection implements Runnable {
              BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
             this.writer = writer;
             this.reader = reader;
-            Thread read = new Thread(new ReadMsg());
-
-            writer.write("Type your name:\n");
-            writer.flush();
-
-
-            read.start();
-
-            server.addClient(clientName, this);
-            System.out.println("New client, hello " + clientName);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);//todo
-        } finally {
-            if (!socket.isClosed()) {
-                try {
-                    socket.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);//todo
-                }
-            }
-            server.removeClient(this);
-        }
-    }
-
-    private class ReadMsg implements Runnable {
-        @Override
-        public void run() {
-            String message;
             while (true) {
-
                 try {
                     message = reader.readLine();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                if(clientName == null){
-                    clientName = message;
-                    continue;
-                }
+
                 if (message == null || message.isEmpty()) {
                     continue;
                 }
@@ -84,11 +50,32 @@ public class ServerConnection implements Runnable {
                     }
                 }
             }
+
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);//todo
+        }  finally {
+            if (!socket.isClosed()) {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);//todo
+                }
+            }
+            server.removeClient(this);
+        }
+    }
+
+    private class ReadMsg implements Runnable {
+        @Override
+        public void run() {
+
         }
     }
 
 
-    public void send(String message) throws IOException {//todo exceptions
+    synchronized public void send(String message) throws IOException {//todo exceptions
         writer.write(message + '\n');
         writer.flush();
     }

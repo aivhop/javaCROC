@@ -1,32 +1,31 @@
 package homework.chernetsov.task13.auctionservices;
 
-import homework.chernetsov.task13.exceptions.InvalidBetTime;
+import homework.chernetsov.task13.exceptions.IncorrectLotFile;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
 
 public class Lot {
-    private BigDecimal currentValue;
+    volatile private BigDecimal currentValue;
     private Participant currentParticipant;
-    private final ZonedDateTime endTime;
+    private final String name;
 
-    public Lot(BigDecimal currentValue, Participant currentParticipant, ZonedDateTime endTime) {
-        if (endTime.isBefore(ZonedDateTime.now())) {
-            throw new IllegalArgumentException("Sorry, a new lot that is already closed doesn't make sense");
+    public Lot(BigDecimal currentValue, Participant currentParticipant, String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Sorry, the lot name can't be empty");
         }
-        if (currentValue.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Sorry, the cost must be greater than zero");
-        }
-        this.currentValue = currentValue;
+        this.name = name;
+        setCurrentValue(currentValue);
         this.currentParticipant = currentParticipant;
-        this.endTime = endTime;
     }
 
-    public Lot(BigDecimal currentValue, ZonedDateTime endTime) {
-        this(currentValue, null, endTime);
-    }
 
-    synchronized public BigDecimal getCurrentValue() {
+    public Lot(BigDecimal currentValue, String name) {
+        this(currentValue, null, name);
+    }
+    public BigDecimal getCurrentValue() {
         return currentValue;
     }
 
@@ -34,24 +33,39 @@ public class Lot {
         return currentParticipant;
     }
 
-    synchronized public ZonedDateTime getEndTime() {
-        return endTime;
+    public String getName() {
+        return name;
     }
 
-    synchronized public Participant getWinner() {
-        return ZonedDateTime.now().isBefore(endTime) ? null : currentParticipant;
+    public void setCurrentParticipant(Participant currentParticipant) {
+        this.currentParticipant = currentParticipant;
     }
 
-    synchronized public boolean placeBet(Participant participant, BigDecimal value) throws InvalidBetTime {
-        ZonedDateTime betTime = ZonedDateTime.now();
-        if (betTime.isAfter(endTime)) {
-            throw new InvalidBetTime(betTime, endTime);
+    public void setCurrentValue(BigDecimal currentValue) {
+        if (currentValue.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Sorry, the cost must be greater than zero");
         }
-        if (value.compareTo(currentValue) > 0) {
-            currentValue = value;
-            currentParticipant = participant;
-            return true;
+        this.currentValue = currentValue;
+    }
+
+    public static Lot readFromFile(String fileName) throws IncorrectLotFile {
+        String lotName;
+        BigDecimal lotValue;
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String readLine = reader.readLine();
+            if (readLine == null || readLine.isEmpty()) {
+                throw new IncorrectLotFile("Sorry, the lot name is missing");
+            }
+            lotName = readLine;
+            readLine = reader.readLine();
+            try {
+                lotValue = new BigDecimal(readLine);
+            } catch (NumberFormatException ex) {
+                throw new IncorrectLotFile("Sorry, the lot price is set incorrectly", ex);
+            }
+        } catch (IOException e) {
+            throw new IncorrectLotFile("Sorry, " + e.getMessage(), e);
         }
-        return false;
+        return new Lot(lotValue, lotName);
     }
 }
