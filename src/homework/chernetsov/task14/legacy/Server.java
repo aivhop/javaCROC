@@ -1,4 +1,4 @@
-package homework.chernetsov.task14;
+package homework.chernetsov.task14.legacy;
 
 import java.io.IOException;
 import java.net.ServerSocket;
