@@ -1,4 +1,4 @@
-package homework.chernetsov.task15;
+package homework.chernetsov.task15.dbentity;
 
 
 public class Pet {

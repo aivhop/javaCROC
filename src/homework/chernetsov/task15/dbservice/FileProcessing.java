@@ -1,4 +1,4 @@
-package homework.chernetsov.task15;
+package homework.chernetsov.task15.dbservice;
 
 import homework.chernetsov.task15.exceptions.InvalidResourceFileName;
 

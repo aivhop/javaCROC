@@ -1,11 +1,14 @@
 package homework.chernetsov.task15;
 
+import homework.chernetsov.task15.dbentity.Client;
+import homework.chernetsov.task15.dbentity.ClientPetRelation;
+import homework.chernetsov.task15.dbentity.Pet;
+import homework.chernetsov.task15.dbentity.TupleDB;
 import homework.chernetsov.task15.exceptions.ConnectionException;
-import homework.chernetsov.task15.exceptions.CreationTableException;
 
 import java.sql.*;
 
-public class DB {
+public class DB implements AutoCloseable {
     private Connection connection;
 
     public DB(Connection connection) throws ConnectionException {
@@ -28,8 +31,6 @@ public class DB {
             throw new ConnectionException(e);
         }
     }
-
-
 
 
     public void create(TupleDB tupleDB) {//todo modificator for tuple
@@ -205,9 +206,42 @@ public class DB {
     }
 
     @Override
+    public void close() throws Exception {
+        if (!connection.isClosed()) {
+            connection.close();
+        }
+    }
+
+    @Override
     public String toString() {
+        StringBuilder db = new StringBuilder();
+        try (Statement statement = connection.createStatement()) {
+            String[] tables = {"Client", "Pet", "Client_Pet"};
+            for (int i = 0; i < tables.length; i++) {
+                String tableName = tables[i];
+                String sql = "select * from " + tableName;
+                db.append("\nTable ").append(tableName).append("\n");
+                try (ResultSet result = statement.executeQuery(sql)) {
+                    ResultSetMetaData meta = result.getMetaData();
+                    for (int j = 1; j <= meta.getColumnCount(); j++) {
+                        db.append(meta.getColumnName(j))
+                                .append("\t");
+                    }
+                    while (result.next()) {
+                        db.append("\n");
+                        for (int j = 1; j <= meta.getColumnCount(); j++) {
+                            db.append(result.getString(j))
+                                    .append("\t\t");
+                        }
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
 
 
-        return null;
+        return db.toString();
     }
 }

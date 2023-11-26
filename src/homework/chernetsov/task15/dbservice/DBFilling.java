@@ -1,4 +1,9 @@
-package homework.chernetsov.task15;
+package homework.chernetsov.task15.dbservice;
+
+import homework.chernetsov.task15.DB;
+import homework.chernetsov.task15.dbentity.Client;
+import homework.chernetsov.task15.dbentity.Pet;
+import homework.chernetsov.task15.dbentity.TupleDB;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,8 +25,6 @@ public class DBFilling {
                 int agePet = Integer.parseInt(parameters[6]);
                 Client client = new Client(idClient, surnameClient, firstnameClient, phoneClient);
                 Pet pet = new Pet(medCardNumberPet, client, namePet, agePet);
-                System.out.print(pet.getMedCardNumber() + " ");
-                System.out.println(client.getId());
                 dataBase.create(new TupleDB(pet, client));
                 line = source.readLine();
             }

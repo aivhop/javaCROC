@@ -21,7 +21,7 @@ public class InvalidResourceFileName extends RuntimeException {
 
     @Override
     public String toString() {
-        return "Sorry, a format file is needed: " + correctFormat.substring(correctFormat.lastIndexOf(".")) +
+        return "Sorry, a format file is needed: " + correctFormat +
                 ", your file name: " + inputFileName;
     }
 }
