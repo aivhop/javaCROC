@@ -3,6 +3,7 @@ package homework.chernetsov.task14.client;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 public class Client {
     public static final int DEFAULT_PORT = 2023;
@@ -11,20 +12,14 @@ public class Client {
     private final PrintWriter writer;
     private final Socket socket;
 
-    private final int port;
-    private final String host;
-
-
 
     public Client(String host, int port) {
-        this.port = port;
-        this.host = host;
         try {
             this.socket = new Socket(host, port);
-            this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
+            this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_16));
+            this.writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_16), true);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException("Incorrect host and port", e);
         }
     }
 
@@ -41,19 +36,34 @@ public class Client {
             read.join();
             write.join();
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Critical error: " + e.getMessage(),e);
+        }
+    }
+
+    private void close() {
+        System.out.println("The connection is disconnected, the server is offline, write bye");
+        try {
+            if (!socket.isClosed()) {
+                socket.close();
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException("Critical error: " + ex.getMessage(), ex);
         }
     }
 
     private class ReadMsg implements Runnable {
         @Override
         public void run() {
-            while (true) {
+            while (!socket.isClosed()) {
                 try {
                     String message = reader.readLine();
                     System.out.println(message);
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    if (e.getClass().getSimpleName().equals("SocketException")) {
+                        close();
+                    } else {
+                        System.err.println("Critical error: " + e.getMessage());
+                    }
                 }
             }
         }
@@ -64,17 +74,21 @@ public class Client {
 
         @Override
         public void run() {
-            while (true) {
+            while (!socket.isClosed()) {
                 try {
                     String message = console.readLine();
                     writer.println(message);
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    if (e.getClass().getSimpleName().equals("SocketException")) {
+                        close();
+                    } else {
+                        System.err.println("Critical error: " + e.getMessage());
+                    }
                 }
-
             }
         }
     }
+
     public static void main(String[] args) {
         Client client = new Client();
         client.start();
