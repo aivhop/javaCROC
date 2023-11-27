@@ -9,9 +9,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public class DBFilling {
-    public static void fill(DB dataBase, BufferedReader source) {
+    public static void fillFromCSVFileReader(DB dataBase, BufferedReader source) {
         //todo source!=null
-        String line = null;
+        String line;
         try {
             line = source.readLine();
             while (line != null) {

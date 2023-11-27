@@ -9,20 +9,20 @@ import homework.chernetsov.task15.exceptions.ConnectionException;
 import java.sql.*;
 
 public class DB implements AutoCloseable {
-    private Connection connection;
+    private final Connection connection;
 
     public DB(Connection connection) throws ConnectionException {
         this.connection = connection;
-        init();
+        initTaskTables();
     }
 
-    private void init() throws ConnectionException {
-        String tableClient = "create table Client( client_id integer primary key," +
-                " client_surname varchar, client_firstname varchar, client_phone varchar)";
-        String tablePet = "create table Pet( pet_medical_card_number integer primary key," +
-                " pet_owner integer, pet_name varchar, pet_age integer)";
-        String tableClientPet = "create table Client_Pet( pet_medical_card_number integer," +
-                " client_id integer)";
+    private void initTaskTables() throws ConnectionException {
+        String tableClient = "CREATE TABLE Client( client_id INTEGER PRIMARY KEY," +
+                " client_surname VARCHAR, client_firstname VARCHAR, client_phone VARCHAR)";
+        String tablePet = "CREATE TABLE Pet( pet_medical_card_number INTEGER PRIMARY KEY," +
+                " pet_owner INTEGER, pet_name VARCHAR, pet_age INTEGER)";
+        String tableClientPet = "CREATE TABLE Client_Pet( pet_medical_card_number INTEGER," +
+                " client_id INTEGER)";
         try (Statement statement = connection.createStatement()) {
             statement.execute(tableClient);
             statement.execute(tablePet);
@@ -33,10 +33,10 @@ public class DB implements AutoCloseable {
     }
 
 
-    public void create(TupleDB tupleDB) {//todo modificator for tuple
-        Pet pet = tupleDB.getPet();
-        Client client = tupleDB.getClient();
-        ClientPetRelation clientPetRelation = new ClientPetRelation(pet.getMedCardNumber(), client.getId());
+    public void create(TupleDB tupleDB) {
+        Pet pet = tupleDB.pet();
+        Client client = tupleDB.client();
+        ClientPetRelation clientPetRelation = new ClientPetRelation(pet.medCardNumber(), client.id());
         create(pet);
         create(client);
         create(clientPetRelation);
@@ -44,22 +44,22 @@ public class DB implements AutoCloseable {
 
     public TupleDB readTupleDB(int petMedCardNumber) {
         Pet pet = readPet(petMedCardNumber);
-        return new TupleDB(pet, pet.getOwner());
+        return new TupleDB(pet, pet.owner());
     }
 
     public void update(TupleDB tupleDB) {
-        int petMedCardNumber = tupleDB.getPet().getMedCardNumber();
-        int clientId = tupleDB.getClient().getId();
-        update(tupleDB.getPet());
-        update(tupleDB.getClient());
+        int petMedCardNumber = tupleDB.pet().medCardNumber();
+        int clientId = tupleDB.client().id();
+        update(tupleDB.pet());
+        update(tupleDB.client());
         update(new ClientPetRelation(petMedCardNumber, clientId));
     }
 
     public void delete(TupleDB tupleDB) {
-        int petMedCardNumber = tupleDB.getPet().getMedCardNumber();
-        int clientId = tupleDB.getClient().getId();
-        delete(tupleDB.getPet());
-        delete(tupleDB.getClient());
+        int petMedCardNumber = tupleDB.pet().medCardNumber();
+        int clientId = tupleDB.client().id();
+        delete(tupleDB.pet());
+        delete(tupleDB.client());
         delete(new ClientPetRelation(petMedCardNumber, clientId));
     }
 
@@ -67,11 +67,11 @@ public class DB implements AutoCloseable {
         String sql = "insert into Client_Pet (pet_medical_card_number, client_id)" +
                 "values(?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, clientPetRelation.getPetMedCardNumber());
-            statement.setInt(2, clientPetRelation.getClientId());
+            statement.setInt(1, clientPetRelation.petMedCardNumber());
+            statement.setInt(2, clientPetRelation.clientId());
             statement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e);//todo custom
+            throw new RuntimeException(e);
         }
     }
 
@@ -82,15 +82,15 @@ public class DB implements AutoCloseable {
             ResultSet result = statement.executeQuery(sql);
             return new ClientPetRelation(petMedCardNumber, result.getInt("client_id"));
         } catch (SQLException e) {
-            throw new RuntimeException(e);//todo custom
+            throw new RuntimeException(e);
         }
     }
 
     private void update(ClientPetRelation clientPetRelation) {
         String sql = "update Client_Pet SET client_id = ? WHERE pet_medical_card_number = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, clientPetRelation.getClientId());
-            statement.setInt(2, clientPetRelation.getPetMedCardNumber());
+            statement.setInt(1, clientPetRelation.clientId());
+            statement.setInt(2, clientPetRelation.petMedCardNumber());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -100,7 +100,7 @@ public class DB implements AutoCloseable {
     private void delete(ClientPetRelation clientPetRelation) {
         String sql = "delete from Client_Pet where pet_medical_card_number = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, clientPetRelation.getPetMedCardNumber());
+            statement.setInt(1, clientPetRelation.petMedCardNumber());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -111,10 +111,10 @@ public class DB implements AutoCloseable {
         String sql = "insert into Client (client_id, client_surname, client_firstname, client_phone)" +
                 "values(?, ?, ?,?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, client.getId());
-            statement.setString(2, client.getSurname());
-            statement.setString(3, client.getFirstname());
-            statement.setString(4, client.getPhone());
+            statement.setInt(1, client.id());
+            statement.setString(2, client.surname());
+            statement.setString(3, client.firstname());
+            statement.setString(4, client.phone());
             statement.execute();
         } catch (SQLException e) {
             // client already exist
@@ -130,17 +130,17 @@ public class DB implements AutoCloseable {
                     , result.getString("client_firstname"),
                     result.getString("client_phone"));
         } catch (SQLException e) {
-            throw new RuntimeException(e);//todo custom
+            throw new RuntimeException(e);
         }
     }
 
     private void update(Client client) {
         String sql = "update Client SET client_surname = ?, client_firstname = ?, client_phone = ? WHERE client_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, client.getSurname());
-            statement.setString(2, client.getFirstname());
-            statement.setString(3, client.getPhone());
-            statement.setInt(4, client.getId());
+            statement.setString(1, client.surname());
+            statement.setString(2, client.firstname());
+            statement.setString(3, client.phone());
+            statement.setInt(4, client.id());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -150,7 +150,7 @@ public class DB implements AutoCloseable {
     private void delete(Client client) {
         String sql = "delete from Client where client_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, client.getId());
+            statement.setInt(1, client.id());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -160,10 +160,10 @@ public class DB implements AutoCloseable {
         String sql = "insert into Pet (pet_medical_card_number, pet_owner, pet_name, pet_age)" +
                 "values(?, ?, ?,?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, pet.getMedCardNumber());
-            statement.setInt(2, pet.getOwner().getId());
-            statement.setString(3, pet.getName());
-            statement.setInt(4, pet.getAge());
+            statement.setInt(1, pet.medCardNumber());
+            statement.setInt(2, pet.owner().id());
+            statement.setString(3, pet.name());
+            statement.setInt(4, pet.age());
             statement.execute();
         } catch (SQLException e) {
             // pet already exist
@@ -179,17 +179,17 @@ public class DB implements AutoCloseable {
                     , result.getString("pet_name"),
                     result.getInt("pet_age"));
         } catch (SQLException e) {
-            throw new RuntimeException(e);//todo custom
+            throw new RuntimeException(e);
         }
     }
 
     private void update(Pet pet) {
         String sql = "update Pet SET pet_owner = ?, pet_name = ?, pet_age = ? WHERE pet_medical_card_number = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, pet.getOwner().getId());
-            statement.setString(2, pet.getName());
-            statement.setInt(3, pet.getAge());
-            statement.setInt(4, pet.getMedCardNumber());
+            statement.setInt(1, pet.owner().id());
+            statement.setString(2, pet.name());
+            statement.setInt(3, pet.age());
+            statement.setInt(4, pet.medCardNumber());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -199,7 +199,7 @@ public class DB implements AutoCloseable {
     private void delete(Pet pet) {
         String sql = "delete from Pet where pet_medical_card_number = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, pet.getMedCardNumber());
+            statement.setInt(1, pet.medCardNumber());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -217,8 +217,7 @@ public class DB implements AutoCloseable {
         StringBuilder db = new StringBuilder();
         try (Statement statement = connection.createStatement()) {
             String[] tables = {"Client", "Pet", "Client_Pet"};
-            for (int i = 0; i < tables.length; i++) {
-                String tableName = tables[i];
+            for (String tableName : tables) {
                 String sql = "select * from " + tableName;
                 db.append("\nTable ").append(tableName).append("\n");
                 try (ResultSet result = statement.executeQuery(sql)) {
@@ -240,8 +239,6 @@ public class DB implements AutoCloseable {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
-
         return db.toString();
     }
 }

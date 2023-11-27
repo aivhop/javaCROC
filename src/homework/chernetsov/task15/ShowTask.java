@@ -15,7 +15,7 @@ public class ShowTask {
         try (BufferedReader reader = FileProcessing.checkAndReadFileCSV(args[0]);
              DBConnection con = DBConnection.tryConnect();
              DB db = new DB(con.getConnection())) {
-            DBFilling.fill(db, reader);
+            DBFilling.fillFromCSVFileReader(db, reader);
             System.out.println(db);
         } catch (Exception e) {
             System.out.println(e.getMessage());
