@@ -1,4 +1,4 @@
-package homework.chernetsov.task15.dbentity;
+package homework.chernetsov.task16.dbentity;
 
 public record TupleDB(Pet pet, Client client) {
 

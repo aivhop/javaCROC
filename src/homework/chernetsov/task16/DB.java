@@ -1,10 +1,7 @@
-package homework.chernetsov.task15;
+package homework.chernetsov.task16;
 
-import homework.chernetsov.task15.dbentity.*;
-import homework.chernetsov.task15.dbentity.dao.ClientDao;
-import homework.chernetsov.task15.dbentity.dao.ClientPetRelationDao;
-import homework.chernetsov.task15.dbentity.dao.PetDao;
-import homework.chernetsov.task15.exceptions.ConnectionException;
+import homework.chernetsov.task16.dbentity.*;
+import homework.chernetsov.task16.exceptions.ConnectionException;
 
 import java.sql.*;
 
@@ -37,6 +34,7 @@ public class DB implements AutoCloseable {
             throw new ConnectionException(e);
         }
     }
+//todo пусть добавление питомца будет учитывать клиентов
 
     public void create(TupleDB tupleDB) throws SQLException {
         Pet pet = tupleDB.pet();
@@ -99,6 +97,7 @@ public class DB implements AutoCloseable {
     private void createPet(Pet pet) {
         try {
             petDao.create(pet);
+            //todo связи проверить обновить мб и тд
         } catch (SQLException e) {
             // pet already exist
         }
@@ -122,7 +121,7 @@ public class DB implements AutoCloseable {
 
     private void deletePet(Pet pet) {
         try {
-            petDao.delete(pet);
+            petDao.delete(pet);//todo telegram
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -1,0 +1,1 @@
+standard filepath: "src/homework/chernetsov/task15/resource/data.csv"

@@ -1,4 +1,4 @@
-package homework.chernetsov.task15.dbentity;
+package homework.chernetsov.task16.dbentity;
 
 
 import java.util.List;

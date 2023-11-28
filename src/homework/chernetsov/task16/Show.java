@@ -8,7 +8,7 @@ import java.io.BufferedReader;
 import java.util.Arrays;
 
 
-public class ShowTask {
+public class Show {
     public static void main(String[] arg) {
         String[] args = {"src/homework/chernetsov/task15/resource/data.csv"};
         if (args.length == 0) {

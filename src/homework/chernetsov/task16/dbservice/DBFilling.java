@@ -1,4 +1,4 @@
-package homework.chernetsov.task15.dbservice;
+package homework.chernetsov.task16.dbservice;
 
 import homework.chernetsov.task15.DB;
 import homework.chernetsov.task15.dbentity.Client;
