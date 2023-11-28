@@ -4,6 +4,7 @@ import homework.chernetsov.task16.DB;
 import homework.chernetsov.task16.dbentity.Client;
 import homework.chernetsov.task16.dbentity.Pet;
 import homework.chernetsov.task16.dbentity.TupleDB;
+import homework.chernetsov.task16.exceptions.InvalidClientPhoneException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,10 +30,10 @@ public class DBFilling {
                 Integer agePet = Integer.parseInt(parameters[6]);
                 Client client = new Client(idClient, surnameClient, firstnameClient, phoneClient);
                 Pet pet = new Pet(medCardNumberPet, List.of(client), namePet, agePet);
-                dataBase.create(new TupleDB(pet, client));
+                dataBase.createPet(pet);
                 line = source.readLine();
             }
-        } catch (IOException | SQLException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

@@ -16,8 +16,7 @@ import java.util.List;
 
 
 public class Show {
-    public static void main(String[] arg) {
-        String[] args = {"src/homework/chernetsov/task15/resource/data.csv"};
+    public static void main(String[] args) {
         if (args.length == 0) {
             throw new IllegalArgumentException("Sorry, we need file path");
         }
@@ -53,19 +52,22 @@ public class Show {
 
 
             Pet addedPet = db.createPet("newPet", 100, List.of(clientToAdd));
+            System.out.println("createPet new : " + addedPet + '\n');
+            System.out.println("findPet : " + db.findPet(addedPet.medCardNumber()) + '\n');
 
-            String sql = "insert into Pet (pet_name, pet_age)" +
-                    "values(?, ?)";
-            PreparedStatement statement = con.getConnection().prepareStatement(sql);
-            statement.setString(1, "name");
-            statement.setInt(2, 2);
-            ResultSet resultSet = statement.executeQuery();
+            Pet toUpdatePet = new Pet(addedPet.medCardNumber(), List.of(db.findClient(1)), "updated", 10);
+            System.out.println("Old db, with old relations:\n");
+            System.out.println(db);
+            db.updatePet(toUpdatePet);
+            System.out.println("New DB:\n");
+            System.out.println(db);
+            db.deletePet(addedPet.medCardNumber());
+            System.out.println("delete pet, wait clean pet when find it: " + db.findPet(20));
+            System.out.println("DB after removing, cleaned relations: ");
+            System.out.println(db);
 
-            System.out.println("createPet new : " + addedPet);
-
-            System.out.println("createPet already exist" + db.createPet(addedPet.name(),addedPet.age(),addedPet.clients()));
-
-            System.out.println();
+            System.out.println("findClientPhoneNumbersBy: " + db.findClientPhoneNumbersBy(db.findPet(1)));
+            System.out.println("getAllPetsOf: " + db.getAllPetsOf(db.findClient(1)));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println(Arrays.toString(e.getStackTrace()));

@@ -7,7 +7,6 @@ import homework.chernetsov.task16.exceptions.InvalidClientPhoneException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class PetDao {
@@ -58,30 +57,18 @@ public class PetDao {
 
     public Pet createPet(String name, Integer age, List<Client> clients) throws SQLException {
         medCardLast++;
-        String sql = "insert into Pet (pet_name, pet_age)" +
-                "values(?, ?)";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, name);
-        statement.setInt(2, age);
-        statement.execute();
         Pet pet = new Pet(medCardLast, clients, name, age);
         clientDao.addOwnersOfPet(pet);
         clientPetRelationDao.updateWithPetOwners(pet);
-        return pet;
-    }
-
-
-/*    public void create(Pet pet) throws SQLException {
         String sql = "insert into Pet (pet_medical_card_number, pet_name, pet_age)" +
                 "values(?, ?, ?)";
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, pet.medCardNumber());
-        statement.setString(2, pet.name());
-        statement.setInt(3, pet.age());
+        statement.setInt(1, medCardLast);
+        statement.setString(2, name);
+        statement.setInt(3, age);
         statement.execute();
-        clientDao.addOwnersOfPet(pet);
-        clientPetRelationDao.updateWithPetOwners(pet);
-    }*/
+        return pet;
+    }
 
     public Pet findPet(Integer medCardNumber) throws SQLException {
         String sql = "select * from Pet where pet_medical_card_number = " + medCardNumber;
@@ -107,6 +94,8 @@ public class PetDao {
     }
 
     public Pet updatePet(Pet pet) throws SQLException {
+        Pet oldValue = findPet(pet.medCardNumber());
+        clientPetRelationDao.clearRelationsForPet(oldValue.medCardNumber());
         for (Client client : pet.clients()) {
             try {
                 clientDao.createClient(client);
@@ -116,8 +105,6 @@ public class PetDao {
             }
         }
         clientPetRelationDao.updateWithPetOwners(pet);
-
-        Pet oldValue = findPet(pet.medCardNumber());
         String sql = "update Pet SET pet_name = ?, pet_age = ? WHERE pet_medical_card_number = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, pet.name());
@@ -132,5 +119,18 @@ public class PetDao {
         Statement statement = connection.createStatement();
         statement.execute(sql);
         clientPetRelationDao.clearRelationsForPet(medCardNumber);
+    }
+
+    public void create(Pet pet) throws SQLException {
+        clientDao.addOwnersOfPet(pet);
+        clientPetRelationDao.updateWithPetOwners(pet);
+        String sql = "insert into Pet (pet_medical_card_number, pet_name, pet_age)" +
+                "values(?, ?, ?)";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, pet.medCardNumber());
+        statement.setString(2, pet.name());
+        statement.setInt(3, pet.age());
+        statement.execute();
+        medCardLast = pet.medCardNumber();
     }
 }

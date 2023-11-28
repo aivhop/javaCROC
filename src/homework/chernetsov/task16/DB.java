@@ -41,9 +41,7 @@ public class DB implements AutoCloseable {
     }
 
     public void create(TupleDB tupleDB) throws SQLException {
-        Pet pet = tupleDB.pet();
-        Client client = tupleDB.client();
-        createPet(pet.name(), pet.age(), pet.clients());// clients and relations also added by this method
+        createPet(tupleDB.pet().name(), tupleDB.pet().age(), tupleDB.pet().clients());// clients and relations also added by this method
     }
 
     public List<String> findClientPhoneNumbersBy(Pet pet) {
@@ -137,6 +135,7 @@ public class DB implements AutoCloseable {
         try {
             return petDao.updatePet(pet);
         } catch (SQLException e) {
+            //pet mb absent
             throw new RuntimeException("Critical error: " + e);
         }
     }
