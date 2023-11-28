@@ -9,8 +9,6 @@ import homework.chernetsov.task16.dbservice.FileProcessing;
 import homework.chernetsov.task16.exceptions.InvalidClientPhoneException;
 
 import java.io.BufferedReader;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.List;
 

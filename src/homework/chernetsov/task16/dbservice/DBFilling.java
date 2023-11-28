@@ -3,12 +3,10 @@ package homework.chernetsov.task16.dbservice;
 import homework.chernetsov.task16.DB;
 import homework.chernetsov.task16.dbentity.Client;
 import homework.chernetsov.task16.dbentity.Pet;
-import homework.chernetsov.task16.dbentity.TupleDB;
-import homework.chernetsov.task16.exceptions.InvalidClientPhoneException;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
