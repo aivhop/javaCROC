@@ -1,6 +1,6 @@
 package homework.chernetsov.task16.dbservice;
 
-import homework.chernetsov.task15.exceptions.ConnectionException;
+import homework.chernetsov.task16.exceptions.ConnectionException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

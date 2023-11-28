@@ -3,7 +3,7 @@ package homework.chernetsov.task16.dbentity;
 
 import java.util.List;
 
-public record Pet(int medCardNumber, List<Client> clients, String name, int age) {
+public record Pet(Integer medCardNumber, List<Client> clients, String name, Integer age) {
 
     public boolean addClient(Client client) {
         return clients.contains(client) ? false : clients.add(client);

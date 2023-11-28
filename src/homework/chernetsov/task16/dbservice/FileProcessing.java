@@ -1,6 +1,6 @@
 package homework.chernetsov.task16.dbservice;
 
-import homework.chernetsov.task15.exceptions.InvalidResourceFileName;
+import homework.chernetsov.task16.exceptions.InvalidResourceFileName;
 
 import java.io.*;
 

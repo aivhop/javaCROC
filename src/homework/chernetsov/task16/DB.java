@@ -1,9 +1,14 @@
 package homework.chernetsov.task16;
 
 import homework.chernetsov.task16.dbentity.*;
+import homework.chernetsov.task16.dbentity.dao.ClientDao;
+import homework.chernetsov.task16.dbentity.dao.ClientPetRelationDao;
+import homework.chernetsov.task16.dbentity.dao.PetDao;
 import homework.chernetsov.task16.exceptions.ConnectionException;
+import homework.chernetsov.task16.exceptions.InvalidClientPhoneException;
 
 import java.sql.*;
+import java.util.List;
 
 public class DB implements AutoCloseable {
     private final Connection connection;
@@ -13,8 +18,8 @@ public class DB implements AutoCloseable {
 
     public DB(Connection connection) throws ConnectionException {
         this.connection = connection;
-        this.clientDao = new ClientDao(connection);
         this.clientPetRelationDao = new ClientPetRelationDao(connection);
+        this.clientDao = new ClientDao(connection, clientPetRelationDao);
         this.petDao = new PetDao(connection, clientPetRelationDao, clientDao);
         initTaskTables();
     }
@@ -34,19 +39,24 @@ public class DB implements AutoCloseable {
             throw new ConnectionException(e);
         }
     }
-//todo пусть добавление питомца будет учитывать клиентов
 
     public void create(TupleDB tupleDB) throws SQLException {
         Pet pet = tupleDB.pet();
         Client client = tupleDB.client();
-        createPet(pet);
-        createClient(client);
-        clientPetRelationDao.create(tupleDB);
+        createPet(pet.name(), pet.age(), pet.clients());// clients and relations also added by this method
     }
 
-    public TupleDB readTupleDB(int petMedCardNumber, int clientId) throws SQLException {
+    public List<String> findClientPhoneNumbersBy(Pet pet) {
+        return petDao.findClientPhoneNumbersBy(pet);
+    }//todo check
+
+    public List<Pet> getAllPetsOf(Client client) {
+        return petDao.getAllPetsOf(client);
+    }//todo check
+
+    public TupleDB readTupleDB(Integer petMedCardNumber, Integer clientId) throws SQLException {
         if (clientPetRelationDao.isExist(petMedCardNumber, clientId)) {
-            return new TupleDB(readPet(petMedCardNumber), readClient(clientId));
+            return new TupleDB(findPet(petMedCardNumber), findClient(clientId));
         }
         return null;
     }
@@ -57,73 +67,85 @@ public class DB implements AutoCloseable {
     }
 
     public void delete(TupleDB tupleDB) throws SQLException {
-        deletePet(tupleDB.pet());
-        deleteClient(tupleDB.client());
+        deletePet(tupleDB.pet().medCardNumber());
+        deleteClient(tupleDB.client().id());
         clientPetRelationDao.delete(tupleDB);
     }
 
-    private void createClient(Client client) {
+    public Client createClient(Client client) throws InvalidClientPhoneException {
         try {
-            clientDao.create(client);
+            return clientDao.createClient(client);
         } catch (SQLException e) {
-            // client already exist
+            //client already exist, throw InvalidClientPhoneException
+            return null;
         }
     }
 
-    private Client readClient(int id) {
+    public Client findClient(Integer id) {
         try {
-            return clientDao.read(id);
+            return clientDao.findClient(id);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            //client is absent
+            return null;
         }
     }
 
-    private void updateClient(Client client) {
+    public Client updateClient(Client client) {
         try {
-            clientDao.update(client);
+            return clientDao.updateClient(client);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Critical error: " + e);
         }
     }
 
-    private void deleteClient(Client client) {
+    public void deleteClient(Integer id) {
         try {
-            clientDao.delete(client);
+            clientDao.deleteClient(id);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            //client already deleted
         }
     }
 
-    private void createPet(Pet pet) {
+    public Pet createPet(String name, Integer age, List<Client> clients) {
+        try {
+            return petDao.createPet(name, age, clients);
+        } catch (SQLException e) {
+            // pet already exist
+            return null;
+        }
+    }
+
+
+    public void createPet(Pet pet) {
         try {
             petDao.create(pet);
-            //todo связи проверить обновить мб и тд
         } catch (SQLException e) {
             // pet already exist
         }
     }
 
-    private Pet readPet(int medCardNumber) {
+
+    public Pet findPet(Integer medCardNumber) {
         try {
-            return petDao.read(medCardNumber);
+            return petDao.findPet(medCardNumber);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Critical error: " + e);
         }
     }
 
-    private void updatePet(Pet pet) {
+    public Pet updatePet(Pet pet) {
         try {
-            petDao.update(pet);
+            return petDao.updatePet(pet);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Critical error: " + e);
         }
     }
 
-    private void deletePet(Pet pet) {
+    public void deletePet(Integer medCardNumber) {
         try {
-            petDao.delete(pet);//todo telegram
+            petDao.deletePet(medCardNumber);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            //pet already deleted
         }
     }
 

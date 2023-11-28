@@ -1,7 +1,7 @@
 package homework.chernetsov.task16.dbentity;
 
 
-public record Client(int id, String surname, String firstname, String phone) {
+public record Client(Integer id, String surname, String firstname, String phone) {
 
     @Override
     public String toString() {
