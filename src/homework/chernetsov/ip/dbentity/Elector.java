@@ -30,7 +30,7 @@ public record Elector(String passportSeriesNumber, String surname, String firstn
 
     private static String checkPassport(String passportSeriesNumber) {
         if (passportSeriesNumber == null || !passportSeriesNumber.matches("\\d{10}")) {
-            throw new InvalidElectorPassport(passportSeriesNumber);
+            throw new InvalidElectorPassport(passportSeriesNumber, "The passport series and number must consist of 10 digits");
         }
         return passportSeriesNumber;
     }

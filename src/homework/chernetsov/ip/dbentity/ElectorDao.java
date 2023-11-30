@@ -1,9 +1,11 @@
 package homework.chernetsov.ip.dbentity;
 
-import homework.chernetsov.ip.exceptions.CreationElectorException;
 import homework.chernetsov.ip.exceptions.ConnectionException;
+import homework.chernetsov.ip.exceptions.InvalidElectorPassport;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ElectorDao {
 
@@ -13,7 +15,7 @@ public class ElectorDao {
         this.connection = connection;
     }
 
-    public boolean createElector(Elector elector) throws ConnectionException, CreationElectorException {
+    public boolean createElector(Elector elector) throws ConnectionException {
         String sql = "INSERT INTO Elector(elector_passport_series_number, " +
                 "elector_surname, elector_firstname, elector_patronymic, " +
                 "electoral_precinct_id, opportunity_vote) " +
@@ -28,7 +30,6 @@ public class ElectorDao {
             try {
                 statement.execute();
             } catch (SQLException ex) {
-                //throw new CreationElectorException("Sorry, such elector already exist", elector);
                 return false;
             }
         } catch (SQLException e) {
@@ -73,8 +74,53 @@ public class ElectorDao {
 
     public boolean deleteElector(String passportSeriesNumber) throws ConnectionException {
         String sql = "DELETE FROM Elector WHERE elector_passport_series_number = " + passportSeriesNumber;
-        try (Statement statement = connection.createStatement()){
+        try (Statement statement = connection.createStatement()) {
             return statement.executeUpdate(sql) == 1;
+        } catch (SQLException e) {
+            throw new ConnectionException(e);
+        }
+    }
+
+    public List<Elector> getElectorsByFirstname(String firstname) throws ConnectionException {
+        String sql = "SELECT * FROM Elector WHERE elector_firstname = ?";
+        return getElectors(sql, firstname);
+    }
+
+    public List<Elector> getElectorsBySurname(String surname) throws ConnectionException {
+        String sql = "SELECT * FROM Elector WHERE elector_surname = ?";
+        return getElectors(sql, surname);
+    }
+
+    public List<Elector> getElectorsByPatronymic(String patronymic) throws ConnectionException {
+        String sql = "SELECT * FROM Elector WHERE elector_patronymic = ?";
+        return getElectors(sql, patronymic);
+    }
+
+    public List<Elector> getElectorsByPrecinctId(int precinctId) throws ConnectionException {
+        String sql = "SELECT * FROM Elector WHERE electoral_precinct_id = ?";
+        return getElectors(sql, precinctId);
+    }
+
+    public List<Elector> getElectorsByOpportunityVote(boolean hasOpportunityVote) throws ConnectionException {
+        String sql = "SELECT * FROM Elector WHERE opportunity_vote = ?";
+        return getElectors(sql, hasOpportunityVote);
+    }
+
+    public boolean isElectorCanVote(String passportSeriesNumber) throws ConnectionException {
+        return isElectorCanVote(passportSeriesNumber, null);
+    }
+
+    public boolean isElectorCanVote(String passportSeriesNumber, Integer precinctId) throws ConnectionException {
+        String sql = "SELECT opportunity_vote FROM Elector WHERE elector_passport_series_number = " + passportSeriesNumber;
+        try (Statement statement = connection.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(sql)) {
+                while (resultSet.next()) {
+                    return resultSet.getBoolean("opportunity_vote") &&
+                            precinctId == null || precinctId.equals(resultSet.getInt("electoral_precinct_id"));
+                }
+                throw new InvalidElectorPassport(passportSeriesNumber, "There is no such elector on the lists");
+            }
+
         } catch (SQLException e) {
             throw new ConnectionException(e);
         }
@@ -84,4 +130,25 @@ public class ElectorDao {
             "elector_surname VARCHAR NOT NULL, " +
             "elector_firstname VARCHAR NOT NULL, elector_patronymic VARCHAR, electoral_precinct_id INTEGER NOT NULL, " +
             "opportunity_vote BOOLEAN NOT NULL)";*/
+
+    private List<Elector> getElectors(String sql, Object value) throws ConnectionException {
+        List<Elector> result = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+            statement.setObject(1, value);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    result.add(new Elector(
+                            resultSet.getString("elector_passport_series_number"),
+                            resultSet.getString("elector_surname"),
+                            resultSet.getString("elector_firstname"),
+                            resultSet.getString("elector_patronymic"),
+                            resultSet.getInt("electoral_precinct_id"),
+                            resultSet.getBoolean("opportunity_vote")));
+                }
+            }
+        } catch (SQLException e) {
+            throw new ConnectionException(e);
+        }
+        return result;
+    }
 }

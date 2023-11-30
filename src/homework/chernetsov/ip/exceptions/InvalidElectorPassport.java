@@ -1,11 +1,14 @@
 package homework.chernetsov.ip.exceptions;
 
-public class InvalidElectorPassport extends RuntimeException{
+public class InvalidElectorPassport extends RuntimeException {
     private final String inputPassport;
+    private final String message;
 
-    public InvalidElectorPassport(String inputPassport) {
+    public InvalidElectorPassport(String inputPassport, String message) {
         this.inputPassport = inputPassport;
+        this.message = message;
     }
+
 
     public String getInputPassport() {
         return inputPassport;
@@ -13,7 +16,6 @@ public class InvalidElectorPassport extends RuntimeException{
 
     @Override
     public String toString() {
-        return "Sorry, incorrect passport series and number:" + inputPassport +
-                ", the passport series and number must consist of 10 digits";
+        return "Sorry, incorrect passport series and number:" + inputPassport + '\n' + message;
     }
 }
