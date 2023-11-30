@@ -2,6 +2,7 @@ package homework.chernetsov.ip.dbentity;
 
 import homework.chernetsov.ip.exceptions.ConnectionException;
 import homework.chernetsov.ip.exceptions.InvalidElectorPassport;
+import homework.chernetsov.ip.exceptions.ReceivingBulletinException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -106,25 +107,93 @@ public class ElectorDao {
         return getElectors(sql, hasOpportunityVote);
     }
 
-    public boolean isElectorCanVote(String passportSeriesNumber) throws ConnectionException {
-        return isElectorCanVote(passportSeriesNumber, null);
+    public boolean isElectorRegistered(String passportSeriesNumber) throws ConnectionException {
+        String sql = "SELECT * FROM Elector WHERE elector_passport_series_number = " + passportSeriesNumber;
+        try (Statement statement = connection.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(sql)) {
+                while (resultSet.next()) {
+                    return true;
+                }
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new ConnectionException(e);
+        }
     }
 
-    public boolean isElectorCanVote(String passportSeriesNumber, Integer precinctId) throws ConnectionException {
+    public void issueBulletin(String passportSeriesNumber, int precinctId) throws ConnectionException, ReceivingBulletinException {
+        boolean isElectorRegisteredOnPrecinct = isElectorRegisteredOnPrecinct(passportSeriesNumber, precinctId);
+        boolean isElectorCanVote = isElectorCanVote(passportSeriesNumber);
+        if (!isElectorRegisteredOnPrecinct || !isElectorCanVote) {
+            throw new ReceivingBulletinException(isElectorRegisteredOnPrecinct, isElectorRegisteredOnPrecinct);
+        }
+        String sql = "UPDATE Elector SET opportunity_vote = ? " +
+                "WHERE elector_passport_series_number = " + passportSeriesNumber;
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setBoolean(1, false);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new ConnectionException(e);
+        }
+    }
+
+    public boolean isElectorCanReceiveBulletin(String passportSeriesNumber, int precinctId) throws ConnectionException {
         String sql = "SELECT opportunity_vote FROM Elector WHERE elector_passport_series_number = " + passportSeriesNumber;
         try (Statement statement = connection.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(sql)) {
                 while (resultSet.next()) {
                     return resultSet.getBoolean("opportunity_vote") &&
-                            precinctId == null || precinctId.equals(resultSet.getInt("electoral_precinct_id"));
+                            precinctId == resultSet.getInt("electoral_precinct_id");
                 }
                 throw new InvalidElectorPassport(passportSeriesNumber, "There is no such elector on the lists");
             }
-
         } catch (SQLException e) {
             throw new ConnectionException(e);
         }
     }
+
+    public boolean isElectorRegisteredOnPrecinct(String passportSeriesNumber, int precinctId) throws ConnectionException {
+        String sql = "SELECT electoral_precinct_id FROM Elector WHERE elector_passport_series_number = " + passportSeriesNumber;
+        try (Statement statement = connection.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(sql)) {
+                while (resultSet.next()) {
+                    return precinctId == resultSet.getInt("electoral_precinct_id");
+                }
+                throw new InvalidElectorPassport(passportSeriesNumber, "There is no such elector on the lists");
+            }
+        } catch (SQLException e) {
+            throw new ConnectionException(e);
+        }
+    }
+
+    public boolean isElectorCanVote(String passportSeriesNumber) throws ConnectionException {
+        String sql = "SELECT opportunity_vote FROM Elector WHERE elector_passport_series_number = " + passportSeriesNumber;
+        try (Statement statement = connection.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(sql)) {
+                while (resultSet.next()) {
+                    return resultSet.getBoolean("opportunity_vote");
+                }
+                throw new InvalidElectorPassport(passportSeriesNumber, "There is no such elector on the lists");
+            }
+        } catch (SQLException e) {
+            throw new ConnectionException(e);
+        }
+    }
+
+/*    public boolean isElectorCanVote(String passportSeriesNumber, Integer precinctId) throws ConnectionException {
+        String sql = "SELECT opportunity_vote FROM Elector WHERE elector_passport_series_number = " + passportSeriesNumber;
+        try (Statement statement = connection.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(sql)) {
+                while (resultSet.next()) {
+                    return resultSet.getBoolean("opportunity_vote") &&
+                            (precinctId == null || precinctId.equals(resultSet.getInt("electoral_precinct_id")));
+                }
+                throw new InvalidElectorPassport(passportSeriesNumber, "There is no such elector on the lists");
+            }
+        } catch (SQLException e) {
+            throw new ConnectionException(e);
+        }
+    }*/
 
 /*    String tableElector = "CREATE TABLE Elector( elector_passport_series_number VARCHAR(10) PRIMARY KEY NOT NULL, " +
             "elector_surname VARCHAR NOT NULL, " +

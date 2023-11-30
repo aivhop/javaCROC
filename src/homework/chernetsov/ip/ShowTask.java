@@ -3,6 +3,7 @@ package homework.chernetsov.ip;
 import homework.chernetsov.ip.dbentity.Elector;
 import homework.chernetsov.ip.exceptions.ConnectionException;
 import homework.chernetsov.ip.interfaces.ElectionCommissionInter;
+import homework.chernetsov.ip.interfaces.ElectorInter;
 
 public class ShowTask {
     public static void main(String[] args) {
@@ -23,8 +24,9 @@ public class ShowTask {
             System.out.println(db.getElectorsByOpportunityVote(false));
 
             ElectionCommissionInter employee = db;
+            ElectorInter elect = db;
             employee.getElectorsByFirstname("123");
-            System.out.println(employee.isElectorCanVote("123"));
+            System.out.println(elect.isElectorRegistered("0000000010"));
 /*            System.out.println(dao.createElector(el));
             System.out.println(dao.createElector(el));
             System.out.println(dao.findElector(el.passportSeriesNumber()));

@@ -3,6 +3,7 @@ package homework.chernetsov.ip;
 import homework.chernetsov.ip.dbentity.Elector;
 import homework.chernetsov.ip.dbentity.ElectorDao;
 import homework.chernetsov.ip.exceptions.ConnectionException;
+import homework.chernetsov.ip.exceptions.ReceivingBulletinException;
 import homework.chernetsov.ip.interfaces.ElectionCommissionInter;
 
 import java.sql.*;
@@ -24,13 +25,28 @@ public class DataBaseElector implements AutoCloseable, ElectionCommissionInter {
     }
 
     @Override
+    public boolean isElectorRegistered(String passportSeriesNumber) throws ConnectionException {
+        return electorDao.isElectorRegistered(passportSeriesNumber);
+    }
+
+    @Override
     public boolean isElectorCanVote(String passportSeriesNumber) throws ConnectionException {
         return electorDao.isElectorCanVote(passportSeriesNumber);
     }
 
     @Override
-    public boolean isElectorCanVote(String passportSeriesNumber, int precinctId) throws ConnectionException {
-        return electorDao.isElectorCanVote(passportSeriesNumber, precinctId);
+    public void issueBulletin(String passportSeriesNumber, int precinctId) throws ConnectionException, ReceivingBulletinException {
+        electorDao.issueBulletin(passportSeriesNumber, precinctId);
+    }
+
+    @Override
+    public boolean isElectorRegisteredOnPrecinct(String passportSeriesNumber, int precinctId) throws ConnectionException {
+        return electorDao.isElectorRegisteredOnPrecinct(passportSeriesNumber, precinctId);
+    }
+
+    @Override
+    public boolean isElectorCanReceiveBulletin(String passportSeriesNumber, int precinctId) throws ConnectionException {
+        return electorDao.isElectorCanReceiveBulletin(passportSeriesNumber, precinctId);
     }
 
     @Override
