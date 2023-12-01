@@ -93,6 +93,25 @@ public class DataBaseElector implements AutoCloseable, ElectionCommissionInter {
     public List<Elector> getElectorsByOpportunityVote(boolean hasOpportunityVote) throws ConnectionException {
         return electorDao.getElectorsByOpportunityVote(hasOpportunityVote);
     }
+    @Override
+    public List<Elector> readElectors() throws ConnectionException {
+        return electorDao.readElectors();
+    }
+    @Override
+    public int createElectors(List<Elector> electors) throws ConnectionException {
+        return electorDao.createElectors(electors);
+    }
+    @Override
+    public boolean createElector(String passportSeriesNumber, String surname, String firstname, String patronymic,
+                                 int precinctId, boolean opportunityVote) throws ConnectionException {
+        return electorDao.createElector(new Elector(passportSeriesNumber, surname, firstname, patronymic, precinctId, opportunityVote));
+    }
+
+    @Override
+    public boolean createElector(String passportSeriesNumber, String surname, String firstname,
+                                 int precinctId, boolean opportunityVote) throws ConnectionException {
+        return electorDao.createElector(new Elector(passportSeriesNumber, surname, firstname, precinctId, opportunityVote));
+    }
 
     @Override
     public void close() throws Exception {
@@ -104,7 +123,7 @@ public class DataBaseElector implements AutoCloseable, ElectionCommissionInter {
     private void createTableElector() throws ConnectionException {
         String tableElector = "CREATE TABLE Elector( elector_passport_series_number VARCHAR(10) PRIMARY KEY NOT NULL, " +
                 "elector_surname VARCHAR NOT NULL, " +
-                "elector_firstname VARCHAR NOT NULL, elector_patronymic VARCHAR, electoral_precinct_id INTEGER NOT NULL, " +
+                "elector_firstname VARCHAR NOT NULL, elector_patronymic VARCHAR NOT NULL, electoral_precinct_id INTEGER NOT NULL, " +
                 "opportunity_vote BOOLEAN NOT NULL)";
         try (Statement statement = connection.createStatement()) {
             statement.execute(tableElector);

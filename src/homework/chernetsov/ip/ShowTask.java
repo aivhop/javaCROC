@@ -1,7 +1,8 @@
 package homework.chernetsov.ip;
 
 import homework.chernetsov.ip.dbentity.Elector;
-import homework.chernetsov.ip.exceptions.ConnectionException;
+import homework.chernetsov.ip.dbservice.DBFileProcessingService;
+
 import homework.chernetsov.ip.interfaces.ElectionCommissionInter;
 import homework.chernetsov.ip.interfaces.ElectorInter;
 
@@ -12,11 +13,11 @@ public class ShowTask {
             Elector el2 = new Elector("0000000001", "surname", "A", "M", 2, true);
             Elector el3 = new Elector("0000000002", "C", "name", "M", 2, false);
             Elector el4 = new Elector("0000000003", "C", "A", "father", 3, false);
-
+/*
             db.createElector(el1);
             db.createElector(el2);
             db.createElector(el3);
-            db.createElector(el4);
+            db.createElector(el4);*/
 
             System.out.println(db);
 
@@ -27,6 +28,14 @@ public class ShowTask {
             ElectorInter elect = db;
             employee.getElectorsByFirstname("123");
             System.out.println(elect.isElectorRegistered("0000000010"));
+            DBFileProcessingService files = new DBFileProcessingService(db);
+
+            //db.createElectors(ReaderElectorService.readElectorsFromCSVFileReader(FileProcessing.checkAndReadFileCSV("src/homework/chernetsov/ip/resource/data.csv")));
+            System.out.println(db);
+
+            files.readElectorsFromCSV("src/homework/chernetsov/ip/resource/data.csv");
+            System.out.println(db);
+            files.uploadElectorsToCSV("src/homework/chernetsov/ip/out/out.csv");
 /*            System.out.println(dao.createElector(el));
             System.out.println(dao.createElector(el));
             System.out.println(dao.findElector(el.passportSeriesNumber()));

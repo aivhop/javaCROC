@@ -8,9 +8,16 @@ import java.util.List;
 
 public interface ElectionCommissionInter extends ElectorInter {
 
-    void issueBulletin(String passportSeriesNumber, int precinctId) throws ConnectionException, ReceivingBulletinException;
+    List<Elector> readElectors() throws ConnectionException;
 
     boolean createElector(Elector elector) throws ConnectionException;
+    int createElectors(List<Elector> electors) throws ConnectionException;
+
+    boolean createElector(String passportSeriesNumber, String surname, String firstname, String patronymic,
+                          int precinctId, boolean opportunityVote) throws ConnectionException;
+
+    boolean createElector(String passportSeriesNumber, String surname, String firstname,
+                          int precinctId, boolean opportunityVote) throws ConnectionException;
 
     Elector findElector(String passportSeriesNumber) throws ConnectionException;
 
@@ -27,5 +34,4 @@ public interface ElectionCommissionInter extends ElectorInter {
     List<Elector> getElectorsByPrecinctId(int precinctId) throws ConnectionException;
 
     List<Elector> getElectorsByOpportunityVote(boolean hasOpportunityVote) throws ConnectionException;
-
 }

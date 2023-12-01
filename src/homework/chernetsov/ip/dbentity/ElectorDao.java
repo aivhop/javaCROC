@@ -16,27 +16,57 @@ public class ElectorDao {
         this.connection = connection;
     }
 
+    public List<Elector> readElectors() throws ConnectionException {
+        List<Elector> result = new ArrayList<>();
+        String sql = "SELECT * FROM Elector";
+        try (Statement statement = connection.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(sql)) {
+                while (resultSet.next()) {
+                    result.add(new Elector(
+                            resultSet.getString("elector_passport_series_number"),
+                            resultSet.getString("elector_surname"),
+                            resultSet.getString("elector_firstname"),
+                            resultSet.getString("elector_patronymic"),
+                            resultSet.getInt("electoral_precinct_id"),
+                            resultSet.getBoolean("opportunity_vote")));
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new ConnectionException(e);
+        }
+        return result;
+    }
+
     public boolean createElector(Elector elector) throws ConnectionException {
+        return createElectors(List.of(elector)) == 1;
+    }
+
+    public int createElectors(List<Elector> electors) throws ConnectionException {
+        int count = 0;
         String sql = "INSERT INTO Elector(elector_passport_series_number, " +
                 "elector_surname, elector_firstname, elector_patronymic, " +
                 "electoral_precinct_id, opportunity_vote) " +
                 "VALUES(?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, elector.passportSeriesNumber());
-            statement.setString(2, elector.surname());
-            statement.setString(3, elector.firstname());
-            statement.setString(4, elector.patronymic());
-            statement.setInt(5, elector.precinctId());
-            statement.setBoolean(6, elector.opportunityVote());
-            try {
-                statement.execute();
-            } catch (SQLException ex) {
-                return false;
+            for (Elector elector : electors) {
+                statement.setString(1, elector.passportSeriesNumber());
+                statement.setString(2, elector.surname());
+                statement.setString(3, elector.firstname());
+                statement.setString(4, elector.patronymic());
+                statement.setInt(5, elector.precinctId());
+                statement.setBoolean(6, elector.opportunityVote());
+                try {
+                    statement.execute();
+                    count++;
+                } catch (SQLException ex) {
+                    // elector already exist
+                }
             }
         } catch (SQLException e) {
             throw new ConnectionException(e);
         }
-        return true;
+        return count;
     }
 
     public Elector findElector(String passportSeriesNumber) throws ConnectionException {
@@ -180,25 +210,6 @@ public class ElectorDao {
         }
     }
 
-/*    public boolean isElectorCanVote(String passportSeriesNumber, Integer precinctId) throws ConnectionException {
-        String sql = "SELECT opportunity_vote FROM Elector WHERE elector_passport_series_number = " + passportSeriesNumber;
-        try (Statement statement = connection.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery(sql)) {
-                while (resultSet.next()) {
-                    return resultSet.getBoolean("opportunity_vote") &&
-                            (precinctId == null || precinctId.equals(resultSet.getInt("electoral_precinct_id")));
-                }
-                throw new InvalidElectorPassport(passportSeriesNumber, "There is no such elector on the lists");
-            }
-        } catch (SQLException e) {
-            throw new ConnectionException(e);
-        }
-    }*/
-
-/*    String tableElector = "CREATE TABLE Elector( elector_passport_series_number VARCHAR(10) PRIMARY KEY NOT NULL, " +
-            "elector_surname VARCHAR NOT NULL, " +
-            "elector_firstname VARCHAR NOT NULL, elector_patronymic VARCHAR, electoral_precinct_id INTEGER NOT NULL, " +
-            "opportunity_vote BOOLEAN NOT NULL)";*/
 
     private List<Elector> getElectors(String sql, Object value) throws ConnectionException {
         List<Elector> result = new ArrayList<>();
