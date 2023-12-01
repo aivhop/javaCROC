@@ -13,17 +13,36 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * Service for processing files related to the Elector database.
+ */
 public class DBFileProcessingService implements FileService, AutoCloseable {
-
+    /**
+     * The instance to interact with the Elector database.
+     */
     private final DataBaseElector dataBaseElector;
+    /**
+     * The PrintWriter used for logging.
+     */
     private final PrintWriter log;
 
-
+    /**
+     * Constructs a DBFileProcessingService with the specified DataBaseElector and log information.
+     *
+     * @param dataBaseElector The DataBaseElector instance to interact with the Elector database.
+     * @param logFileName     The name of the log file.
+     * @param logFileFormat   The format of the log file.
+     */
     public DBFileProcessingService(DataBaseElector dataBaseElector, String logFileName, String logFileFormat) {
         this.dataBaseElector = dataBaseElector;
         this.log = FileProcessing.checkAndGetWriterToFile(logFileName, logFileFormat);
     }
-
+    /**
+     * Uploads electors from the database to a CSV file.
+     *
+     * @param fileName The name of the CSV file.
+     * @throws ConnectionException If there is an issue with the database connection.
+     */
     public void uploadElectorsToCSV(String fileName) throws ConnectionException {
         try (PrintWriter writer = FileProcessing.checkAndGetWriterFileCSV(fileName)) {
             writer.println("passport_series,passport_number,surname,firstname,patronymic," +
@@ -42,7 +61,13 @@ public class DBFileProcessingService implements FileService, AutoCloseable {
                     ',' + elector.bulletinReceived()).forEach(writer::println);
         }
     }
-
+    /**
+     * Reads electors from a CSV file and inserts them into the database.
+     *
+     * @param fileName The name of the CSV file.
+     * @throws ConnectionException           If there is an issue with the database connection.
+     * @throws ReadElectorsFromFileException If there is an issue reading electors from the file.
+     */
     public void readElectorsFromCSV(String fileName) throws ConnectionException, ReadElectorsFromFileException {
         log.println("READING:");
         try (BufferedReader source = FileProcessing.checkAndGetReaderFileCSV(fileName)) {
@@ -84,9 +109,11 @@ public class DBFileProcessingService implements FileService, AutoCloseable {
             throw new ReadElectorsFromFileException(e);
         }
     }
-
+    /**
+     * Closes the log file.
+     */
     @Override
-    public void close() throws Exception {
+    public void close() {
         log.close();
     }
 }
