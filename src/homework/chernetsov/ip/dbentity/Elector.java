@@ -48,6 +48,12 @@ public record Elector(String passportSeriesNumber, String surname, String firstn
                 birthday, bulletinReceived, DEFAULT_AGE_OF_ELECTORS);
     }
 
+    public Elector(String passportSeriesNumber, String surname, String firstname, String patronymic,
+                   int precinctId, LocalDate birthday) {
+        this(passportSeriesNumber, surname, firstname, patronymic, precinctId,
+                birthday, false, DEFAULT_AGE_OF_ELECTORS);
+    }
+
     public Elector(String passportSeriesNumber, String surname, String firstname, int precinctId,
                    int dayOfBirth, int monthOfBirth, int yearOfBirth, boolean bulletinReceived) {
         this(passportSeriesNumber, surname, firstname, null, precinctId,

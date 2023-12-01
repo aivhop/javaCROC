@@ -49,6 +49,7 @@ public class ElectorDao {
         }
         return result;
     }
+
     /**
      * Creates a single elector in the database.
      *
@@ -59,6 +60,7 @@ public class ElectorDao {
     public boolean createElector(Elector elector) throws ConnectionException {
         return createElectors(List.of(elector)) == 1;
     }
+
     /**
      * Creates multiple electors in the database.
      *
@@ -93,6 +95,7 @@ public class ElectorDao {
         }
         return count;
     }
+
     /**
      * Finds an elector in the database based on passport series number.
      *
@@ -112,6 +115,7 @@ public class ElectorDao {
         }
         return null;
     }
+
     /**
      * Updates an existing elector in the database.
      *
@@ -135,6 +139,7 @@ public class ElectorDao {
             throw new ConnectionException(e);
         }
     }
+
     /**
      * Deletes an elector from the database based on passport series number.
      *
@@ -150,6 +155,7 @@ public class ElectorDao {
             throw new ConnectionException(e);
         }
     }
+
     /**
      * Gets electors from the database based on the elector's first name.
      *
@@ -161,6 +167,7 @@ public class ElectorDao {
         String sql = "SELECT * FROM Elector WHERE elector_firstname = ?";
         return getElectors(sql, firstname);
     }
+
     /**
      * Gets electors from the database based on the elector's last name.
      *
@@ -172,6 +179,7 @@ public class ElectorDao {
         String sql = "SELECT * FROM Elector WHERE elector_surname = ?";
         return getElectors(sql, surname);
     }
+
     /**
      * Gets electors from the database based on the elector's patronymic.
      *
@@ -183,6 +191,7 @@ public class ElectorDao {
         String sql = "SELECT * FROM Elector WHERE elector_patronymic = ?";
         return getElectors(sql, patronymic);
     }
+
     /**
      * Gets electors from the database based on the electoral precinct ID.
      *
@@ -194,6 +203,7 @@ public class ElectorDao {
         String sql = "SELECT * FROM Elector WHERE electoral_precinct_id = ?";
         return getElectors(sql, precinctId);
     }
+
     /**
      * Gets electors from the database based on whether they have received a voting bulletin.
      *
@@ -202,9 +212,10 @@ public class ElectorDao {
      * @throws ConnectionException If there is an issue with the database connection.
      */
     public List<Elector> getElectorsByBulletinHasBeenReceived(boolean bulletinHasBeenReceived) throws ConnectionException {
-        String sql = "SELECT * FROM Elector WHERE opportunity_vote = ?";
+        String sql = "SELECT * FROM Elector WHERE bulletin_has_been_received = ?";
         return getElectors(sql, bulletinHasBeenReceived);
     }
+
     /**
      * Checks if an elector is registered in the database based on passport series number.
      *
@@ -225,6 +236,7 @@ public class ElectorDao {
             throw new ConnectionException(e);
         }
     }
+
     /**
      * Issues a voting bulletin to an elector in the database.
      *
@@ -258,7 +270,7 @@ public class ElectorDao {
      * @throws ConnectionException If there is an issue with the database connection.
      */
     public boolean isElectorCanReceiveBulletinOnThisPrecinct(String passportSeriesNumber, int precinctId) throws ConnectionException {
-        String sql = "SELECT bulletin_has_been_received FROM Elector WHERE elector_passport_series_number = " + passportSeriesNumber;
+        String sql = "SELECT bulletin_has_been_received, electoral_precinct_id FROM Elector WHERE elector_passport_series_number = " + passportSeriesNumber;
         try (Statement statement = connection.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(sql)) {
                 while (resultSet.next()) {
@@ -271,6 +283,7 @@ public class ElectorDao {
             throw new ConnectionException(e);
         }
     }
+
     /**
      * Checks if an elector is registered on a specific precinct.
      *
@@ -286,12 +299,13 @@ public class ElectorDao {
                 if (resultSet.next()) {
                     return precinctId == resultSet.getInt("electoral_precinct_id");
                 }
-                throw new InvalidElectorPassport(passportSeriesNumber, "There is no such elector on the lists");
+                return false;
             }
         } catch (SQLException e) {
             throw new ConnectionException(e);
         }
     }
+
     /**
      * Checks if an elector is eligible to receive a voting bulletin based on the previous receipt status.
      *
@@ -306,17 +320,18 @@ public class ElectorDao {
                 if (resultSet.next()) {
                     return !resultSet.getBoolean("bulletin_has_been_received");
                 }
-                throw new InvalidElectorPassport(passportSeriesNumber, "There is no such elector on the lists");
+                return false;
             }
         } catch (SQLException e) {
             throw new ConnectionException(e);
         }
     }
+
     /**
      * Gets electors from the database based on age at a given election date.
      *
-     * @param age           The age of the electors.
-     * @param electionDate  The date of the election.
+     * @param age          The age of the electors.
+     * @param electionDate The date of the election.
      * @return A list of Elector objects within the specified age.
      * @throws ConnectionException If there is an issue with the database connection.
      */
@@ -327,6 +342,7 @@ public class ElectorDao {
                                 electionDate.minusYears(age + 1).isBefore(elector.birthday()))
                 .collect(Collectors.toList());
     }
+
     /**
      * Gets electors from the database based on a custom predicate.
      *
@@ -337,11 +353,12 @@ public class ElectorDao {
     public List<Elector> getElectorsBy(Predicate<Elector> electorPredicate) throws ConnectionException {
         return readElectors().stream().filter(electorPredicate).collect(Collectors.toList());
     }
+
     /**
      * Gets electors from the database based on a specific attribute and value.
      *
-     * @param sql    The SQL query for retrieving electors based on a specific attribute.
-     * @param value  The value used in the SQL query.
+     * @param sql   The SQL query for retrieving electors based on a specific attribute.
+     * @param value The value used in the SQL query.
      * @return A list of Elector objects satisfying the specified attribute and value.
      * @throws ConnectionException If there is an issue with the database connection.
      */
@@ -359,6 +376,7 @@ public class ElectorDao {
         }
         return result;
     }
+
     /**
      * Creates an Elector object from a ResultSet.
      *
