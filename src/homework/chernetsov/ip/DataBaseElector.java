@@ -25,6 +25,85 @@ public class DataBaseElector implements AutoCloseable, ElectionCommissionInter {
     }
 
     @Override
+    public List<Elector> readElectors() throws ConnectionException {
+        return electorDao.readElectors();
+    }
+
+    @Override
+    public boolean createElector(Elector elector) throws ConnectionException {
+        return electorDao.createElector(elector);
+    }
+
+    @Override
+    public int createElectors(List<Elector> electors) throws ConnectionException {
+        return electorDao.createElectors(electors);
+    }
+
+    @Override
+    public Elector findElector(String passportSeriesNumber) throws ConnectionException {
+        return electorDao.findElector(passportSeriesNumber);
+    }
+
+    @Override
+    public boolean updateElector(Elector elector) throws ConnectionException {
+        return electorDao.updateElector(elector);
+    }
+
+    @Override
+    public boolean deleteElector(String passportSeriesNumber) throws ConnectionException {
+        return electorDao.deleteElector(passportSeriesNumber);
+    }
+
+    @Override
+    public List<Elector> getElectorsByFirstname(String firstname) throws ConnectionException {
+        return electorDao.getElectorsByFirstname(firstname);
+    }
+
+    @Override
+    public List<Elector> getElectorsBySurname(String surname) throws ConnectionException {
+        return electorDao.getElectorsBySurname(surname);
+    }
+
+    @Override
+    public List<Elector> getElectorsByPatronymic(String patronymic) throws ConnectionException {
+        return null;
+    }
+
+    @Override
+    public List<Elector> getElectorsByPrecinctId(int precinctId) throws ConnectionException {
+        return electorDao.getElectorsByPrecinctId(precinctId);
+    }
+
+    @Override
+    public List<Elector> getElectorsByBulletinHasBeenReceived(boolean bulletinHasBeenReceived) throws ConnectionException {
+        return electorDao.getElectorsByBulletinHasBeenReceived(bulletinHasBeenReceived);
+    }
+
+    @Override
+    public boolean isElectorRegistered(String passportSeriesNumber) throws ConnectionException {
+        return electorDao.isElectorRegistered(passportSeriesNumber);
+    }
+
+    @Override
+    public void issueBulletin(String passportSeriesNumber, int precinctId) throws ConnectionException, ReceivingBulletinException {
+        electorDao.issueBulletin(passportSeriesNumber, precinctId);
+    }
+
+    @Override
+    public boolean isElectorCanReceiveBulletinOnThisPrecinct(String passportSeriesNumber, int precinctId) throws ConnectionException {
+        return electorDao.isElectorCanReceiveBulletinOnThisPrecinct(passportSeriesNumber, precinctId);
+    }
+
+    @Override
+    public boolean isElectorRegisteredOnPrecinct(String passportSeriesNumber, int precinctId) throws ConnectionException {
+        return electorDao.isElectorRegisteredOnPrecinct(passportSeriesNumber, precinctId);
+    }
+
+    @Override
+    public boolean isElectorCanReceiveBulletin(String passportSeriesNumber) throws ConnectionException {
+        return electorDao.isElectorCanReceiveBulletin(passportSeriesNumber);
+    }
+    /*    @Override
     public boolean isElectorRegistered(String passportSeriesNumber) throws ConnectionException {
         return electorDao.isElectorRegistered(passportSeriesNumber);
     }
@@ -45,7 +124,7 @@ public class DataBaseElector implements AutoCloseable, ElectionCommissionInter {
     }
 
     @Override
-    public boolean isElectorCanReceiveBulletin(String passportSeriesNumber, int precinctId) throws ConnectionException {
+    public boolean isElectorCanReceiveBulletin(String passportSeriesNumber) throws ConnectionException {
         return electorDao.isElectorCanReceiveBulletinOnThisPrecinct(passportSeriesNumber, precinctId);
     }
 
@@ -111,7 +190,7 @@ public class DataBaseElector implements AutoCloseable, ElectionCommissionInter {
     public boolean createElector(String passportSeriesNumber, String surname, String firstname,
                                  int precinctId, boolean opportunityVote) throws ConnectionException {
         return electorDao.createElector(new Elector(passportSeriesNumber, surname, firstname, precinctId, opportunityVote));
-    }
+    }*/
 
     @Override
     public void close() throws Exception {

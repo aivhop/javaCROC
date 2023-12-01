@@ -125,7 +125,7 @@ public class ElectorDao {
 
     public List<Elector> getElectorsByBulletinHasBeenReceived(boolean bulletinHasBeenReceived) throws ConnectionException {
         String sql = "SELECT * FROM Elector WHERE opportunity_vote = ?";
-        return getElectors(sql, bulletinHasBeenReceived); //todo
+        return getElectors(sql, bulletinHasBeenReceived);
     }
 
     public boolean isElectorRegistered(String passportSeriesNumber) throws ConnectionException {
@@ -224,7 +224,7 @@ public class ElectorDao {
                 resultSet.getString("elector_firstname"),
                 resultSet.getString("elector_patronymic"),
                 resultSet.getInt("electoral_precinct_id"),
-                resultSet.getBoolean("bulletin_has_been_received"),
-                LocalDate.parse(resultSet.getString("elector_birthday")));
+                LocalDate.parse(resultSet.getString("elector_birthday")),
+                resultSet.getBoolean("bulletin_has_been_received"));
     }
 }

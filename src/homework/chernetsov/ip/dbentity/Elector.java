@@ -7,30 +7,43 @@ import java.time.LocalDate;
 
 
 public record Elector(String passportSeriesNumber, String surname, String firstname, String patronymic,
-                      int precinctId, boolean bulletinReceived, LocalDate birthday) {
+                      int precinctId, LocalDate birthday, boolean bulletinReceived) {
 
     public static int AGE_OF_ELECTORS = 18;
 
-    public Elector(String passportSeriesNumber, String surname, String firstname, String patronymic, int precinctId, boolean bulletinReceived, int dayOfBirth, int monthOfBirth, int yearOfBirth) {
-        this(passportSeriesNumber, surname, firstname, patronymic, precinctId, bulletinReceived, checkBirthDay(dayOfBirth, monthOfBirth, yearOfBirth));
+    public Elector(String passportSeriesNumber, String surname, String firstname, String patronymic, int precinctId,
+                   int dayOfBirth, int monthOfBirth, int yearOfBirth, boolean bulletinReceived) {
+        this(passportSeriesNumber, surname, firstname, patronymic, precinctId,
+                convertDate(dayOfBirth, monthOfBirth, yearOfBirth), bulletinReceived);
     }
 
-    public Elector(String passportSeriesNumber, String surname, String firstname, String patronymic, int precinctId, boolean bulletinReceived, LocalDate birthday) {
+    public Elector(String passportSeriesNumber, String surname, String firstname, String patronymic, int precinctId,
+                   int dayOfBirth, int monthOfBirth, int yearOfBirth) {
+        this(passportSeriesNumber, surname, firstname, patronymic, precinctId,
+                dayOfBirth, monthOfBirth, yearOfBirth, false);
+    }
+
+    public Elector(String passportSeriesNumber, String surname, String firstname, String patronymic, int precinctId,
+                   LocalDate birthday, boolean bulletinReceived) {
         this.passportSeriesNumber = checkPassport(passportSeriesNumber);
         this.surname = checkName(surname);
         this.firstname = checkName(firstname);
         this.patronymic = patronymic == null || patronymic.isEmpty() ? "-" : patronymic;
         this.precinctId = checkPrecinctId(precinctId);
+        this.birthday = checkBirthDay(birthday);
         this.bulletinReceived = bulletinReceived;
-        this.birthday = birthday;
     }
 
-    public Elector(String passportSeriesNumber, String surname, String firstname, int precinctId, boolean bulletinReceived, int dayOfBirth, int monthOfBirth, int yearOfBirth) {
-        this(passportSeriesNumber, surname, firstname, null, bulletinReceived, precinctId, dayOfBirth, monthOfBirth, yearOfBirth);
+    public Elector(String passportSeriesNumber, String surname, String firstname, int precinctId,
+                   int dayOfBirth, int monthOfBirth, int yearOfBirth, boolean bulletinReceived) {
+        this(passportSeriesNumber, surname, firstname, null, precinctId,
+                dayOfBirth, monthOfBirth, yearOfBirth, bulletinReceived);
     }
 
-    public Elector(String passportSeriesNumber, String surname, String firstname, int precinctId, int dayOfBirth, int monthOfBirth, int yearOfBirth) {
-        this(passportSeriesNumber, surname, firstname, null, false, precinctId, dayOfBirth, monthOfBirth, yearOfBirth);
+    public Elector(String passportSeriesNumber, String surname, String firstname, int precinctId,
+                   int dayOfBirth, int monthOfBirth, int yearOfBirth) {
+        this(passportSeriesNumber, surname, firstname, null, precinctId,
+                dayOfBirth, monthOfBirth, yearOfBirth, false);
     }
 
     public String passportSeries() {
@@ -63,10 +76,13 @@ public record Elector(String passportSeriesNumber, String surname, String firstn
         return precinctId;
     }
 
-    private static LocalDate checkBirthDay(int dayOfBirth, int monthOfBirth, int yearOfBirth) {
-        LocalDate date = java.time.LocalDate.of(yearOfBirth, monthOfBirth, dayOfBirth);
-        if (date.isAfter(java.time.LocalDate.now().minusYears(AGE_OF_ELECTORS))) {
-            throw new InvalidAgeOfElectorException(AGE_OF_ELECTORS, date.getYear());
+    private static LocalDate convertDate(int dayOfBirth, int monthOfBirth, int yearOfBirth) {
+        return LocalDate.of(yearOfBirth, monthOfBirth, dayOfBirth);
+    }
+
+    private static LocalDate checkBirthDay(LocalDate date) {
+        if (date.isAfter(LocalDate.now().minusYears(AGE_OF_ELECTORS))) {
+            throw new InvalidAgeOfElectorException(AGE_OF_ELECTORS, date);
         }
         return date;
     }
