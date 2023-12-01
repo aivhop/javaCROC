@@ -46,7 +46,7 @@ public class Show {
                 System.out.println(e.toString() + '\n');
             }
             db.deleteClient(20);
-            System.out.println("delete client, wait clean client when find him: " + db.findClient(20) + '\n');
+            System.out.println("delete client, wait null client when find him: " + db.findClient(20) + '\n');
 
 
             Pet addedPet = db.createPet("newPet", 100, List.of(clientToAdd));
@@ -60,7 +60,7 @@ public class Show {
             System.out.println("New DB:\n");
             System.out.println(db);
             db.deletePet(addedPet.medCardNumber());
-            System.out.println("delete pet, wait clean pet when find it: " + db.findPet(20));
+            System.out.println("delete pet, wait null pet when find it: " + db.findPet(20));
             System.out.println("DB after removing, cleaned relations: ");
             System.out.println(db);
 

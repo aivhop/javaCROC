@@ -2,7 +2,6 @@ package homework.chernetsov.task16.dbentity.dao;
 
 import homework.chernetsov.task16.dbentity.Client;
 import homework.chernetsov.task16.dbentity.Pet;
-import homework.chernetsov.task16.dbentity.TupleDB;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,26 +14,47 @@ public class ClientPetRelationDao {
         this.connection = connection;
     }
 
-    public List<Integer> getClientsIdForPet(Integer petMedCardNumber) throws SQLException {
-        String sql = "SELECT client_id FROM Client_Pet WHERE pet_medical_card_number = " + petMedCardNumber;
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
-        List<Integer> clientsId = new ArrayList<>();
-        while (resultSet.next()) {
-            clientsId.add(resultSet.getInt("client_id"));
+    public List<Client> getClientsForPet(Integer petMedCardNumber) throws SQLException {
+        String sql = "SELECT * FROM Client_Pet cp JOIN Client c ON cp.client_id = c.client_id WHERE pet_medical_card_number = " + petMedCardNumber;
+        try (Statement statement = connection.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(sql)) {
+                List<Client> clients = new ArrayList<>();
+                while (resultSet.next()) {
+                    clients.add(new Client(
+                            resultSet.getInt("client_id"),
+                            resultSet.getString("client_surname"),
+                            resultSet.getString("client_firstname"),
+                            resultSet.getString("client_phone"))
+                    );
+                }
+                return clients;
+            }
         }
-        return clientsId;
     }
-    public List<Integer> getPetMedCardNumbersForClient(Integer id) throws SQLException {
-        String sql = "SELECT pet_medical_card_number FROM Client_Pet WHERE client_id = " + id;
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
-        List<Integer> petMedCardNumbers = new ArrayList<>();
-        while (resultSet.next()) {
-            petMedCardNumbers.add(resultSet.getInt("pet_medical_card_number"));
+
+    public List<Pet> getPetsForClient(Integer id) throws SQLException {
+        String sql = "SELECT * FROM Client_Pet cp JOIN Pet p ON p.pet_medical_card_number = cp.pet_medical_card_number  WHERE client_id = " + id;
+        try (Statement statement = connection.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(sql)) {
+                List<Pet> pets = new ArrayList<>();
+                while (resultSet.next()) {
+                    Integer petMedCardNumber = resultSet.getInt("pet_medical_card_number");
+                    pets.add(new Pet(
+                            petMedCardNumber,
+                            getClientsForPet(petMedCardNumber),
+                            resultSet.getString("pet_name"),
+                            resultSet.getInt("pet_age")
+                    ));
+                }
+                return pets;
+            }
         }
-        return petMedCardNumbers;
     }
+
+    public List<String> findClientPhoneNumbersBy(Pet pet) throws SQLException {
+        return getClientsForPet(pet.medCardNumber()).stream().map(Client::phone).toList();
+    }
+
 
     public void updateWithPetOwners(Pet pet) {
         String sql = "insert into Client_Pet (pet_medical_card_number, client_id)" +
@@ -55,41 +75,46 @@ public class ClientPetRelationDao {
     }
 
 
-    public void create(TupleDB tupleDB) throws SQLException {
+    public void create(Integer petMedCardNumber, Integer clientId) throws SQLException {
         String sql = "insert into Client_Pet (pet_medical_card_number, client_id)" +
                 "values(?, ?)";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, tupleDB.pet().medCardNumber());
-        statement.setInt(2, tupleDB.client().id());
-        statement.execute();
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, petMedCardNumber);
+            statement.setInt(2, clientId);
+            statement.execute();
+        }
     }
 
     public boolean isExist(Integer petMedCardNumber, Integer clientId) throws SQLException {
         String sql = "select 1 from Client_Pet where pet_medical_card_number = ? AND client_id = ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, petMedCardNumber);
-        statement.setInt(2, clientId);
-        return statement.execute();
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, petMedCardNumber);
+            statement.setInt(2, clientId);
+            return statement.execute();
+        }
     }
 
 
-    public void delete(TupleDB tupleDB) throws SQLException {
+    public void delete(Integer petMedCardNumber, Integer clientId) throws SQLException {
         String sql = "delete from Client_Pet where pet_medical_card_number = ? AND client_id = ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, tupleDB.pet().medCardNumber());
-        statement.setInt(1, tupleDB.client().id());
-        statement.execute();
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, petMedCardNumber);
+            statement.setInt(2, clientId);
+            statement.execute();
+        }
     }
 
     public void clearRelationsForPet(Integer medCardNumber) throws SQLException {
         String sql = "DELETE FROM Client_Pet WHERE pet_medical_card_number = " + medCardNumber;
-        Statement statement = connection.createStatement();
-        statement.execute(sql);
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(sql);
+        }
     }
 
     public void clearRelationsForClient(Integer id) throws SQLException {
         String sql = "DELETE FROM Client_Pet WHERE client_id = " + id;
-        Statement statement = connection.createStatement();
-        statement.execute(sql);
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(sql);
+        }
     }
 }

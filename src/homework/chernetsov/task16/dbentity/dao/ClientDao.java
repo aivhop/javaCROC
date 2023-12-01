@@ -21,13 +21,14 @@ public class ClientDao {
         }
         String sql = "insert into Client (client_id, client_surname, client_firstname, client_phone)" +
                 "values(?, ?, ?,?)";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, client.id());
-        statement.setString(2, client.surname());
-        statement.setString(3, client.firstname());
-        statement.setString(4, client.phone());
-        statement.execute();
-        return client;
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, client.id());
+            statement.setString(2, client.surname());
+            statement.setString(3, client.firstname());
+            statement.setString(4, client.phone());
+            statement.execute();
+            return client;
+        }
     }
 
 
@@ -43,37 +44,40 @@ public class ClientDao {
 
     public Client findClient(Integer id) throws SQLException {
         String sql = "select * from Client where client_id = ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, id);
-        ResultSet result = statement.executeQuery();
-        String surname = null;
-        String firstname = null;
-        String phone = null;
-        while (result.next()) {
-            surname = result.getString("client_surname");
-            firstname = result.getString("client_firstname");
-            phone = result.getString("client_phone");
+        Client client = null;
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            try (ResultSet result = statement.executeQuery()) {
+                if (result.next()) {
+                    String surname = result.getString("client_surname");
+                    String firstname = result.getString("client_firstname");
+                    String phone = result.getString("client_phone");
+                    client = new Client(id, surname, firstname, phone);
+                }
+            }
         }
-        return new Client(id, surname, firstname, phone);
+        return client;
     }
 
     public Client updateClient(Client client) throws SQLException {
         Client oldValue = findClient(client.id());
         String sql = "update Client SET client_surname = ?, client_firstname = ?, client_phone = ? WHERE client_id = ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, client.surname());
-        statement.setString(2, client.firstname());
-        statement.setString(3, client.phone());
-        statement.setInt(4, client.id());
-        statement.executeUpdate();
-        return oldValue;
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, client.surname());
+            statement.setString(2, client.firstname());
+            statement.setString(3, client.phone());
+            statement.setInt(4, client.id());
+            statement.executeUpdate();
+            return oldValue;
+        }
     }
 
     public void deleteClient(Integer id) throws SQLException {
         String sql = "delete from Client where client_id = " + id;
-        Statement statement = connection.createStatement();
-        statement.execute(sql);
-        clientPetRelationDao.clearRelationsForClient(id);
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(sql);
+            clientPetRelationDao.clearRelationsForClient(id);
+        }
     }
 
     public boolean isExistPhone(String phone) {

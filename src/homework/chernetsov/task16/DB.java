@@ -1,5 +1,6 @@
 package homework.chernetsov.task16;
 
+
 import homework.chernetsov.task16.dbentity.*;
 import homework.chernetsov.task16.dbentity.dao.ClientDao;
 import homework.chernetsov.task16.dbentity.dao.ClientPetRelationDao;
@@ -40,35 +41,15 @@ public class DB implements AutoCloseable {
         }
     }
 
-    public void create(TupleDB tupleDB) throws SQLException {
-        createPet(tupleDB.pet().name(), tupleDB.pet().age(), tupleDB.pet().clients());// clients and relations also added by this method
+    public List<String> findClientPhoneNumbersBy(Pet pet) throws SQLException {
+        return clientPetRelationDao.findClientPhoneNumbersBy(pet);
     }
 
-    public List<String> findClientPhoneNumbersBy(Pet pet) {
-        return petDao.findClientPhoneNumbersBy(pet);
+    public List<Pet> getAllPetsOf(Client client) throws SQLException {
+        return clientPetRelationDao.getPetsForClient(client.id());
     }
 
-    public List<Pet> getAllPetsOf(Client client) {
-        return petDao.getAllPetsOf(client);
-    }
 
-    public TupleDB readTupleDB(Integer petMedCardNumber, Integer clientId) throws SQLException {
-        if (clientPetRelationDao.isExist(petMedCardNumber, clientId)) {
-            return new TupleDB(findPet(petMedCardNumber), findClient(clientId));
-        }
-        return null;
-    }
-
-    public void update(TupleDB tupleDB) {
-        updatePet(tupleDB.pet());
-        updateClient(tupleDB.client());
-    }
-
-    public void delete(TupleDB tupleDB) throws SQLException {
-        deletePet(tupleDB.pet().medCardNumber());
-        deleteClient(tupleDB.client().id());
-        clientPetRelationDao.delete(tupleDB);
-    }
 
     public Client createClient(Client client) throws InvalidClientPhoneException {
         try {
