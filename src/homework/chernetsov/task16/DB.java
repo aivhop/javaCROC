@@ -46,11 +46,11 @@ public class DB implements AutoCloseable {
 
     public List<String> findClientPhoneNumbersBy(Pet pet) {
         return petDao.findClientPhoneNumbersBy(pet);
-    }//todo check
+    }
 
     public List<Pet> getAllPetsOf(Client client) {
         return petDao.getAllPetsOf(client);
-    }//todo check
+    }
 
     public TupleDB readTupleDB(Integer petMedCardNumber, Integer clientId) throws SQLException {
         if (clientPetRelationDao.isExist(petMedCardNumber, clientId)) {

@@ -5,6 +5,7 @@ import homework.chernetsov.ip.exceptions.InvalidElectorPassport;
 import homework.chernetsov.ip.exceptions.ReceivingBulletinException;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,16 +23,9 @@ public class ElectorDao {
         try (Statement statement = connection.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(sql)) {
                 while (resultSet.next()) {
-                    result.add(new Elector(
-                            resultSet.getString("elector_passport_series_number"),
-                            resultSet.getString("elector_surname"),
-                            resultSet.getString("elector_firstname"),
-                            resultSet.getString("elector_patronymic"),
-                            resultSet.getInt("electoral_precinct_id"),
-                            resultSet.getBoolean("opportunity_vote")));
+                    result.add(createElectorFromResultSet(resultSet));
                 }
             }
-
         } catch (SQLException e) {
             throw new ConnectionException(e);
         }
@@ -46,8 +40,8 @@ public class ElectorDao {
         int count = 0;
         String sql = "INSERT INTO Elector(elector_passport_series_number, " +
                 "elector_surname, elector_firstname, elector_patronymic, " +
-                "electoral_precinct_id, opportunity_vote) " +
-                "VALUES(?, ?, ?, ?, ?, ?)";
+                "electoral_precinct_id, bulletin_has_been_received, elector_birthday) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             for (Elector elector : electors) {
                 statement.setString(1, elector.passportSeriesNumber());
@@ -55,7 +49,8 @@ public class ElectorDao {
                 statement.setString(3, elector.firstname());
                 statement.setString(4, elector.patronymic());
                 statement.setInt(5, elector.precinctId());
-                statement.setBoolean(6, elector.opportunityVote());
+                statement.setBoolean(6, elector.bulletinReceived());
+                statement.setString(7, elector.birthday().toString());
                 try {
                     statement.execute();
                     count++;
@@ -74,12 +69,7 @@ public class ElectorDao {
         try (Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
-                return new Elector(passportSeriesNumber,
-                        resultSet.getString("elector_surname"),
-                        resultSet.getString("elector_firstname"),
-                        resultSet.getString("elector_patronymic"),
-                        resultSet.getInt("electoral_precinct_id"),
-                        resultSet.getBoolean("opportunity_vote"));
+                return createElectorFromResultSet(resultSet);
             }
         } catch (SQLException e) {
             throw new ConnectionException(e);
@@ -89,14 +79,15 @@ public class ElectorDao {
 
     public boolean updateElector(Elector elector) throws ConnectionException {
         String sql = "UPDATE Elector SET elector_surname = ?, elector_firstname = ?," +
-                " elector_patronymic = ?, electoral_precinct_id = ?, opportunity_vote = ? " +
+                " elector_patronymic = ?, electoral_precinct_id = ?, bulletin_has_been_received = ?, elector_birthday = ? " +
                 "WHERE elector_passport_series_number = " + elector.passportSeriesNumber();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, elector.surname());
             statement.setString(2, elector.firstname());
             statement.setString(3, elector.patronymic());
             statement.setInt(4, elector.precinctId());
-            statement.setBoolean(5, elector.opportunityVote());
+            statement.setBoolean(5, elector.bulletinReceived());
+            statement.setString(6, elector.birthday().toString());
             return statement.executeUpdate() == 1;
         } catch (SQLException e) {
             throw new ConnectionException(e);
@@ -132,9 +123,9 @@ public class ElectorDao {
         return getElectors(sql, precinctId);
     }
 
-    public List<Elector> getElectorsByOpportunityVote(boolean hasOpportunityVote) throws ConnectionException {
+    public List<Elector> getElectorsByBulletinHasBeenReceived(boolean bulletinHasBeenReceived) throws ConnectionException {
         String sql = "SELECT * FROM Elector WHERE opportunity_vote = ?";
-        return getElectors(sql, hasOpportunityVote);
+        return getElectors(sql, bulletinHasBeenReceived); //todo
     }
 
     public boolean isElectorRegistered(String passportSeriesNumber) throws ConnectionException {
@@ -153,26 +144,26 @@ public class ElectorDao {
 
     public void issueBulletin(String passportSeriesNumber, int precinctId) throws ConnectionException, ReceivingBulletinException {
         boolean isElectorRegisteredOnPrecinct = isElectorRegisteredOnPrecinct(passportSeriesNumber, precinctId);
-        boolean isElectorCanVote = isElectorCanVote(passportSeriesNumber);
-        if (!isElectorRegisteredOnPrecinct || !isElectorCanVote) {
-            throw new ReceivingBulletinException(isElectorRegisteredOnPrecinct, isElectorRegisteredOnPrecinct);
+        boolean isElectorCanReceiveBulletin = isElectorCanReceiveBulletin(passportSeriesNumber);
+        if (!isElectorCanReceiveBulletin || !isElectorRegisteredOnPrecinct) {
+            throw new ReceivingBulletinException(isElectorRegisteredOnPrecinct, isElectorCanReceiveBulletin);
         }
-        String sql = "UPDATE Elector SET opportunity_vote = ? " +
+        String sql = "UPDATE Elector SET bulletin_has_been_received = ? " +
                 "WHERE elector_passport_series_number = " + passportSeriesNumber;
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setBoolean(1, false);
+            statement.setBoolean(1, true);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new ConnectionException(e);
         }
     }
 
-    public boolean isElectorCanReceiveBulletin(String passportSeriesNumber, int precinctId) throws ConnectionException {
-        String sql = "SELECT opportunity_vote FROM Elector WHERE elector_passport_series_number = " + passportSeriesNumber;
+    public boolean isElectorCanReceiveBulletinOnThisPrecinct(String passportSeriesNumber, int precinctId) throws ConnectionException {
+        String sql = "SELECT bulletin_has_been_received FROM Elector WHERE elector_passport_series_number = " + passportSeriesNumber;
         try (Statement statement = connection.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(sql)) {
                 while (resultSet.next()) {
-                    return resultSet.getBoolean("opportunity_vote") &&
+                    return !resultSet.getBoolean("bulletin_has_been_received") &&
                             precinctId == resultSet.getInt("electoral_precinct_id");
                 }
                 throw new InvalidElectorPassport(passportSeriesNumber, "There is no such elector on the lists");
@@ -196,12 +187,12 @@ public class ElectorDao {
         }
     }
 
-    public boolean isElectorCanVote(String passportSeriesNumber) throws ConnectionException {
-        String sql = "SELECT opportunity_vote FROM Elector WHERE elector_passport_series_number = " + passportSeriesNumber;
+    public boolean isElectorCanReceiveBulletin(String passportSeriesNumber) throws ConnectionException {
+        String sql = "SELECT bulletin_has_been_received FROM Elector WHERE elector_passport_series_number = " + passportSeriesNumber;
         try (Statement statement = connection.createStatement()) {
             try (ResultSet resultSet = statement.executeQuery(sql)) {
                 while (resultSet.next()) {
-                    return resultSet.getBoolean("opportunity_vote");
+                    return !resultSet.getBoolean("bulletin_has_been_received");
                 }
                 throw new InvalidElectorPassport(passportSeriesNumber, "There is no such elector on the lists");
             }
@@ -217,18 +208,23 @@ public class ElectorDao {
             statement.setObject(1, value);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    result.add(new Elector(
-                            resultSet.getString("elector_passport_series_number"),
-                            resultSet.getString("elector_surname"),
-                            resultSet.getString("elector_firstname"),
-                            resultSet.getString("elector_patronymic"),
-                            resultSet.getInt("electoral_precinct_id"),
-                            resultSet.getBoolean("opportunity_vote")));
+                    result.add(createElectorFromResultSet(resultSet));
                 }
             }
         } catch (SQLException e) {
             throw new ConnectionException(e);
         }
         return result;
+    }
+
+    private Elector createElectorFromResultSet(ResultSet resultSet) throws SQLException {
+        return new Elector(
+                resultSet.getString("elector_passport_series_number"),
+                resultSet.getString("elector_surname"),
+                resultSet.getString("elector_firstname"),
+                resultSet.getString("elector_patronymic"),
+                resultSet.getInt("electoral_precinct_id"),
+                resultSet.getBoolean("bulletin_has_been_received"),
+                LocalDate.parse(resultSet.getString("elector_birthday")));
     }
 }

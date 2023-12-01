@@ -31,7 +31,7 @@ public class DataBaseElector implements AutoCloseable, ElectionCommissionInter {
 
     @Override
     public boolean isElectorCanVote(String passportSeriesNumber) throws ConnectionException {
-        return electorDao.isElectorCanVote(passportSeriesNumber);
+        return electorDao.isElectorCanReceiveBulletin(passportSeriesNumber);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class DataBaseElector implements AutoCloseable, ElectionCommissionInter {
 
     @Override
     public boolean isElectorCanReceiveBulletin(String passportSeriesNumber, int precinctId) throws ConnectionException {
-        return electorDao.isElectorCanReceiveBulletin(passportSeriesNumber, precinctId);
+        return electorDao.isElectorCanReceiveBulletinOnThisPrecinct(passportSeriesNumber, precinctId);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class DataBaseElector implements AutoCloseable, ElectionCommissionInter {
 
     @Override
     public List<Elector> getElectorsByOpportunityVote(boolean hasOpportunityVote) throws ConnectionException {
-        return electorDao.getElectorsByOpportunityVote(hasOpportunityVote);
+        return electorDao.getElectorsByBulletinHasBeenReceived(hasOpportunityVote);
     }
     @Override
     public List<Elector> readElectors() throws ConnectionException {
@@ -124,7 +124,7 @@ public class DataBaseElector implements AutoCloseable, ElectionCommissionInter {
         String tableElector = "CREATE TABLE Elector( elector_passport_series_number VARCHAR(10) PRIMARY KEY NOT NULL, " +
                 "elector_surname VARCHAR NOT NULL, " +
                 "elector_firstname VARCHAR NOT NULL, elector_patronymic VARCHAR NOT NULL, electoral_precinct_id INTEGER NOT NULL, " +
-                "opportunity_vote BOOLEAN NOT NULL)";
+                "bulletin_has_been_received BOOLEAN NOT NULL, elector_birthday VARCHAR(10) NOT NULL )";
         try (Statement statement = connection.createStatement()) {
             statement.execute(tableElector);
         } catch (SQLException e) {

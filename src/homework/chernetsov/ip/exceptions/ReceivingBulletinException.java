@@ -1,27 +1,27 @@
 package homework.chernetsov.ip.exceptions;
 
 public class ReceivingBulletinException extends Exception {
-    private final boolean isBelongToPrecinct;
-    private final boolean isAlreadyReceivedBulletin;
+    private final boolean isElectorRegisteredOnPrecinct;
+    private final boolean bulletinHasBeenReceived;
 
-    public ReceivingBulletinException(boolean isBelongToPrecinct, boolean isAlreadyReceivedBulletin) {
-        this.isBelongToPrecinct = isBelongToPrecinct;
-        this.isAlreadyReceivedBulletin = isAlreadyReceivedBulletin;
+    public ReceivingBulletinException(boolean isElectorRegisteredOnPrecinct, boolean bulletinHasBeenReceived) {
+        this.isElectorRegisteredOnPrecinct = isElectorRegisteredOnPrecinct;
+        this.bulletinHasBeenReceived = bulletinHasBeenReceived;
     }
 
-    public boolean isBelongToPrecinct() {
-        return isBelongToPrecinct;
+    public boolean isElectorRegisteredOnPrecinct() {
+        return isElectorRegisteredOnPrecinct;
     }
 
-    public boolean isAlreadyReceivedBulletin() {
-        return isAlreadyReceivedBulletin;
+    public boolean isBulletinHasBeenReceived() {
+        return bulletinHasBeenReceived;
     }
-
 
     @Override
     public String toString() {
         return "ReceivingBulletinException{" +
-                "isBelongToPrecinct=" + isBelongToPrecinct +
-                ", isAlreadyReceivedBulletin=" + isAlreadyReceivedBulletin;
+                "isElectorRegisteredOnPrecinct=" + isElectorRegisteredOnPrecinct +
+                ", bulletinHasBeenReceived=" + bulletinHasBeenReceived +
+                '}';
     }
 }
