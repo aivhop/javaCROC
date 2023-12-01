@@ -12,3 +12,5 @@ public interface ElectorInter {
 
     boolean isElectorCanReceiveBulletin(String passportSeriesNumber, int precinctId) throws ConnectionException;
 }
+//todo дата рождения
+//todo получил бюллетень

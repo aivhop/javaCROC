@@ -24,5 +24,4 @@ public class ReceivingBulletinException extends Exception {
                 "isBelongToPrecinct=" + isBelongToPrecinct +
                 ", isAlreadyReceivedBulletin=" + isAlreadyReceivedBulletin;
     }
-
 }
