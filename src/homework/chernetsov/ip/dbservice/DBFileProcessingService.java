@@ -13,13 +13,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class DBFileProcessingService implements FileService {
+public class DBFileProcessingService implements FileService, AutoCloseable {
 
     private final DataBaseElector dataBaseElector;
+    private final PrintWriter log;
 
 
-    public DBFileProcessingService(DataBaseElector dataBaseElector) {
+    public DBFileProcessingService(DataBaseElector dataBaseElector, String logFileName, String logFileFormat) {
         this.dataBaseElector = dataBaseElector;
+        this.log = FileProcessing.checkAndGetWriterToFile(logFileName, logFileFormat);
     }
 
     public void uploadElectorsToCSV(String fileName) throws ConnectionException {
@@ -42,6 +44,7 @@ public class DBFileProcessingService implements FileService {
     }
 
     public void readElectorsFromCSV(String fileName) throws ConnectionException, ReadElectorsFromFileException {
+        log.println("READING:");
         try (BufferedReader source = FileProcessing.checkAndGetReaderFileCSV(fileName)) {
             Objects.requireNonNull(source);
             dataBaseElector.createElectors(source.lines().map((x) -> x.split(",")).filter((x) -> x.length == 9 || x.length == 10)
@@ -60,6 +63,7 @@ public class DBFileProcessingService implements FileService {
                             year = Integer.parseInt(x[7]);
                             precinctId = Integer.parseInt(x[8]);
                         } catch (NumberFormatException e) {
+                            log.println(e.getMessage());
                             return null;
                         }
                         Elector elector;
@@ -69,13 +73,20 @@ public class DBFileProcessingService implements FileService {
                                     new Elector(passportSeriesNumber, surname,
                                             firstname, patronymic, precinctId, day, month, year, Boolean.getBoolean(x[9]));
                         } catch (Exception ex) {
+                            log.println(ex + ", Elector: " + passportSeriesNumber);
                             return null;
                         }
+                        log.println("Added: " + elector);
                         return elector;
                     })
                     .filter(Objects::nonNull).collect(Collectors.toList()));
         } catch (IOException e) {
             throw new ReadElectorsFromFileException(e);
         }
+    }
+
+    @Override
+    public void close() throws Exception {
+        log.close();
     }
 }

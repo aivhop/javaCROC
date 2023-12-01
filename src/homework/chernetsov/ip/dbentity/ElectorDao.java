@@ -8,6 +8,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ElectorDao {
 
@@ -201,6 +202,13 @@ public class ElectorDao {
         }
     }
 
+    public List<Elector> getElectorsByAge(int age, LocalDate electionDate) throws ConnectionException {
+        return readElectors().stream()
+                .filter(elector ->
+                        electionDate.minusYears(age).isAfter(elector.birthday()) &&
+                                electionDate.minusYears(age + 1).isBefore(elector.birthday()))
+                .collect(Collectors.toList());
+    }
 
     private List<Elector> getElectors(String sql, Object value) throws ConnectionException {
         List<Elector> result = new ArrayList<>();

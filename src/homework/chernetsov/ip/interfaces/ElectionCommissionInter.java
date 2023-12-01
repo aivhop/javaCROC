@@ -4,6 +4,7 @@ import homework.chernetsov.ip.dbentity.Elector;
 import homework.chernetsov.ip.exceptions.ConnectionException;
 import homework.chernetsov.ip.exceptions.ReceivingBulletinException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ElectionCommissionInter extends ElectorInter {
@@ -30,5 +31,7 @@ public interface ElectionCommissionInter extends ElectorInter {
 
     List<Elector> getElectorsByBulletinHasBeenReceived(boolean bulletinHasBeenReceived) throws ConnectionException;
 
-    //todo birthday statistic
+
+    List<Elector> getElectorsByAge(int age, LocalDate electionDate) throws ConnectionException;
+    //todo predicate
 }

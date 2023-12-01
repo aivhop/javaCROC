@@ -19,6 +19,10 @@ public class InvalidAgeOfElectorException extends RuntimeException {
         return inputBirthday;
     }
 
+    @Override
+    public String getMessage() {
+        return this.toString();
+    }
 
     @Override
     public String toString() {

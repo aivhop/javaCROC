@@ -7,6 +7,7 @@ import homework.chernetsov.ip.exceptions.ReceivingBulletinException;
 import homework.chernetsov.ip.interfaces.ElectionCommissionInter;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
 
 public class DataBaseElector implements AutoCloseable, ElectionCommissionInter {
@@ -103,6 +104,12 @@ public class DataBaseElector implements AutoCloseable, ElectionCommissionInter {
     public boolean isElectorCanReceiveBulletin(String passportSeriesNumber) throws ConnectionException {
         return electorDao.isElectorCanReceiveBulletin(passportSeriesNumber);
     }
+
+    @Override
+    public List<Elector> getElectorsByAge(int age, LocalDate electionDate) throws ConnectionException {
+        return electorDao.getElectorsByAge(age, electionDate);
+    }
+
     /*    @Override
     public boolean isElectorRegistered(String passportSeriesNumber) throws ConnectionException {
         return electorDao.isElectorRegistered(passportSeriesNumber);

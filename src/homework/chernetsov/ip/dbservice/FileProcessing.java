@@ -31,7 +31,7 @@ public class FileProcessing {
             throw new InvalidResourceFileName(inputFileName, correctFormat);
         }
         try {
-            return new PrintWriter(new FileWriter(inputFileName));
+            return new PrintWriter(new FileWriter(inputFileName),true);
         } catch (IOException e) {
             throw new InvalidResourceFileName(e);
         }
