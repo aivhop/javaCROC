@@ -9,16 +9,24 @@ import java.time.ZonedDateTime;
 import java.util.Objects;
 
 public class Auction {
-    private Lot currentLot;
-    private ZonedDateTime endTime;
+    volatile private BigDecimal currentValue;
+    volatile private Participant currentParticipant;
+    private final Lot currentLot;
+    private final ZonedDateTime endTime;
 
     public Auction(Lot currentLot, ZonedDateTime endTime) {
-        setCurrentLot(currentLot);
-        setEndTime(endTime);
+        if (endTime.isBefore(ZonedDateTime.now())) {
+            throw new IllegalArgumentException("Sorry, a new lot that is already closed doesn't make sense");
+        }
+        Objects.requireNonNull(currentLot);
+        this.endTime = endTime;
+        this.currentLot = currentLot;
+        this.currentParticipant = null;
+        this.currentValue = currentLot.startValue();
     }
 
     public Participant getWinner() {
-        return ZonedDateTime.now().isBefore(getEndTime()) ? null : getCurrentParticipant();
+        return ZonedDateTime.now().isBefore(getEndTime()) ? null : currentParticipant;
     }
 
     public boolean placeBet(Participant participant, BigDecimal value) throws InvalidBetTime {
@@ -31,8 +39,8 @@ public class Auction {
         }
         synchronized (this) {
             if (value.compareTo(getCurrentValue()) > 0) {
-                currentLot.setCurrentValue(value);
-                currentLot.setCurrentParticipant(participant);
+                setCurrentValue(value);
+                setCurrentParticipant(participant);
                 return true;
             }
             return false;
@@ -40,31 +48,26 @@ public class Auction {
     }
 
     public BigDecimal getCurrentValue() {
-        return currentLot.getCurrentValue();
+        return currentValue;
     }
 
     public Participant getCurrentParticipant() {
-        return currentLot.getCurrentParticipant();
+        return currentParticipant;
     }
 
     public String getLotName() {
-        return currentLot.getName();
+        return currentLot.name();
     }
 
     public ZonedDateTime getEndTime() {
         return endTime;
     }
 
-
-    public void setEndTime(ZonedDateTime endTime) {
-        if (endTime.isBefore(ZonedDateTime.now())) {
-            throw new IllegalArgumentException("Sorry, a new lot that is already closed doesn't make sense");
-        }
-        this.endTime = endTime;
+    public void setCurrentValue(BigDecimal currentValue) {
+        this.currentValue = currentValue;
     }
 
-    public void setCurrentLot(Lot currentLot) {
-        Objects.requireNonNull(currentLot);
-        this.currentLot = currentLot;
+    public void setCurrentParticipant(Participant currentParticipant) {
+        this.currentParticipant = currentParticipant;
     }
 }

@@ -2,7 +2,9 @@ package homework.chernetsov.task13;
 
 import homework.chernetsov.task13.auction.Auction;
 import homework.chernetsov.task13.auctionservices.Lot;
+import homework.chernetsov.task13.auctionservices.LotReader;
 import homework.chernetsov.task13.auctionservices.Participant;
+import homework.chernetsov.task13.auctionservices.ParticipantReader;
 import homework.chernetsov.task13.exceptions.InvalidBetTime;
 
 import java.time.ZonedDateTime;
@@ -12,9 +14,9 @@ import java.util.Set;
 public class ShowTask {
     public static void main(String[] args) throws InvalidBetTime {
         try {
-            Lot lot = Lot
+            Lot lot = LotReader
                     .readFromFile("src/homework/chernetsov/task13/resource/lot.txt");
-            Set<Participant> participants = Participant
+            Set<Participant> participants = ParticipantReader
                     .readFromFile("src/homework/chernetsov/task13/resource/participants.txt");
 
 
